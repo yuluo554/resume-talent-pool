@@ -10,3 +10,6 @@
 *.docx binary
 *.db binary
 *.sqlite binary
+
+# 合成样例 txt：CRLF 是刻意植入的格式噪声（truth.noise 记录），禁用 EOL 归一保持生成器字节
+data/samples/**/*.txt -text
