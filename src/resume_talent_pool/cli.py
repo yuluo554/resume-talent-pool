@@ -34,7 +34,9 @@ def build_parser() -> argparse.ArgumentParser:
     gen.add_argument("--seed", type=int, default=20261005, help="随机种子（默认 20261005）")
     gen.add_argument("--persons", type=int, default=100, help="虚拟人数（默认 100）")
     gen.add_argument("--out", default="output", help="输出目录（默认 output/，不入仓）")
-    bench_sub.add_parser("parse", help="解析基准：字段级 P/R/F1（M4）")
+    parse = bench_sub.add_parser("parse", help="解析基准：字段级 P/R/F1（M2 起可用，M4 收口全量门槛）")
+    parse.add_argument("--data", default="output", help="数据目录（含 truth.json + resumes/，默认 output/；data/samples 可直接用）")
+    parse.add_argument("--min-f1", type=float, default=0.9, help="宏平均 F1 门槛（默认 0.9，M4 全量收口为 0.95）")
     bench_sub.add_parser("match", help="归一基准：同一人识别 P/R 与误合并率（M4）")
     subparsers.add_parser("purge", help="一键清除全部个人信息（M5）")
     subparsers.add_parser("gui", help="启动 PySide6 桌面应用（M5）")
@@ -58,6 +60,22 @@ def _cmd_bench(args) -> int:
         print(f"简历目录：{summary['resumes_dir']}")
         print(f"真值文件：{summary['truth_path']}")
         return 0
+    if args.bench_command == "parse":
+        try:
+            from .evaluation.benchmark import format_report, run_parse_benchmark
+        except ImportError:
+            print("缺少解析依赖（pdfplumber/python-docx）。请安装：pip install resume-talent-pool[parse]")
+            return 2
+        try:
+            result = run_parse_benchmark(args.data)
+        except FileNotFoundError as exc:
+            print(f"{exc}")
+            return 2
+        print(format_report(result))
+        verdict = "达标" if result["macro_f1"] >= args.min_f1 else "未达标"
+        print(f"门槛判定：宏平均 F1 {result['macro_f1']:.4f} {'>=' if result['macro_f1'] >= args.min_f1 else '<'} "
+              f"{args.min_f1}（{verdict}）")
+        return 0 if result["macro_f1"] >= args.min_f1 else 1
     print(f"尚未实现（里程碑 M4）：bench {args.bench_command}")
     return 2
 

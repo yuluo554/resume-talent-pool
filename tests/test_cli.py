@@ -29,7 +29,12 @@ def test_bench_without_subcommand_shows_usage(capsys):
     assert "bench gen" in capsys.readouterr().out
 
 
-@pytest.mark.parametrize("sub", ["parse", "match"])
-def test_bench_stub_subcommands_exit_2(sub, capsys):
-    assert main(["bench", sub]) == 2
+def test_bench_parse_requires_data_dir(capsys):
+    """bench parse 自 M2 起点亮；指向不存在数据目录时友好报错退出码 2。"""
+    assert main(["bench", "parse", "--data", "no/such/dir"]) == 2
+    assert "truth.json" in capsys.readouterr().out
+
+
+def test_bench_match_stub_exit_2(capsys):
+    assert main(["bench", "match"]) == 2
     assert "尚未实现" in capsys.readouterr().out

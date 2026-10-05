@@ -22,7 +22,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Topic :: Office/Business",
 ]
-# 骨架期核心零第三方依赖（CLI/测试可跑）；M2 合入解析器时把 parse 组提升到这里。
+# 核心域零第三方依赖（CLI/测试可跑）；parse 组维持 extras 显式安装（CI 装 .[dev,parse,gen]，D-022）。
 dependencies = []
 
 [project.optional-dependencies]
