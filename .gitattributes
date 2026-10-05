@@ -1,0 +1,12 @@
+# 统一 LF（干净环境验证/EOL 守门的前提，系列实测教训）
+* text=auto eol=lf
+*.bat text eol=crlf
+
+# 二进制
+*.png binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.docx binary
+*.db binary
+*.sqlite binary

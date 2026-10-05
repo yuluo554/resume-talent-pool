@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "resume-talent-pool"
+version = "0.1.0"
+description = "简历解析与人才库管理桌面应用：批量导入解析、本地人才库、同一人归一、JD 硬条件初筛、PIPL 合规功能化（全本地运行）"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "yuluo554" }]
+keywords = ["resume", "talent-pool", "entity-resolution", "recruiting", "pipl", "pyside6"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Win32 (MS Windows)",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Office/Business",
+]
+# 骨架期核心零第三方依赖（CLI/测试可跑）；M2 合入解析器时把 parse 组提升到这里。
+dependencies = []
+
+[project.optional-dependencies]
+parse = ["python-docx>=0.8.11", "pdfplumber>=0.10,<0.12", "pypinyin>=0.49"]
+gen = ["reportlab>=3.6"]
+gui = ["PySide6>=6.2,<6.8"]
+report = ["python-docx>=0.8.11"]
+llm = ["openai>=1.10"]
+dev = ["pytest>=7.4"]
+
+[project.scripts]
+resume-talent-pool = "resume_talent_pool.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
