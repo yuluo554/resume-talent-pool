@@ -1,0 +1,26 @@
+{
+  "_note": "全部虚构（院校名为自造组合，如有雷同纯属巧合），仅供合成简历生成器使用。majors.family 决定技能池/证书池/期望职位取向：tech=技术类，func=职能类。",
+  "schools": [
+    "临江理工大学", "云溪大学", "南湖师范学院", "望海学院", "白石理工学院",
+    "清源大学", "鹤鸣师范学院", "星城理工学院", "龙渊大学", "麓山学院",
+    "江南信息工程学院", "北岭工业大学", "沧州文理学院", "临海财经大学", "青川师范大学", "听澜学院"
+  ],
+  "majors": [
+    {"name": "计算机科学与技术", "family": "tech"},
+    {"name": "软件工程", "family": "tech"},
+    {"name": "电子信息工程", "family": "tech"},
+    {"name": "网络工程", "family": "tech"},
+    {"name": "数据科学与大数据技术", "family": "tech"},
+    {"name": "信息管理与信息系统", "family": "tech"},
+    {"name": "通信工程", "family": "tech"},
+    {"name": "会计学", "family": "func"},
+    {"name": "财务管理", "family": "func"},
+    {"name": "人力资源管理", "family": "func"},
+    {"name": "行政管理", "family": "func"},
+    {"name": "工商管理", "family": "func"},
+    {"name": "市场营销", "family": "func"},
+    {"name": "电子商务", "family": "func"},
+    {"name": "统计学", "family": "tech"},
+    {"name": "汉语言文学", "family": "func"}
+  ]
+}

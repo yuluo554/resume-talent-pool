@@ -1,0 +1,52 @@
+{
+  "_note": "合成简历生成器主参数（plan/05 §2）。全部概率只经生成器内固定 seed 的派生随机流消费，改任何数值都会改变输出与真值——改动须重跑基准并回写 plan/06。",
+  "template_weights": {"fresh": 0.30, "tech": 0.45, "func": 0.25},
+  "fresh_family_prob_tech": 0.70,
+  "format_probs": {"pdf": 0.4, "docx": 0.4, "txt": 0.2},
+  "layout_probs": {"labeled": 0.5, "sectioned": 0.5},
+  "versioning": {
+    "multi_version_rate": 0.6,
+    "v3_share_of_multi": 0.3,
+    "fresh_max_versions": 2,
+    "phone_change_rate": 0.3,
+    "email_change_rate": 0.3,
+    "desired_position_change_rate": 0.5
+  },
+  "missing_rates": {
+    "_note": "每个字段对每份简历独立抽取是否缺失（plan/05 §2.2：按字段 10–30% 概率缺失）；缺失字段不渲染也不进 truth_fields。",
+    "phone": 0.10,
+    "email": 0.15,
+    "degree": 0.10,
+    "school": 0.10,
+    "major": 0.20,
+    "graduation_date": 0.25,
+    "desired_position": 0.20,
+    "certificates_block": 0.10
+  },
+  "noise_probs": {
+    "_note": "各噪声对每份文件独立抽取，目标 ~50% 文件带至少一种噪声（plan/05 §2.2）。crlf/gbk 仅对 txt 生效；docx_table 仅对 docx 生效。",
+    "pseudo_space": 0.15,
+    "fullwidth_digit": 0.12,
+    "separator_variant": 0.15,
+    "multiline_experience": 0.15,
+    "crlf": 0.12,
+    "gbk_encoding_txt": 0.15,
+    "docx_table": 0.15
+  },
+  "profile": {
+    "_note": "generation_now 为简历时点（固定值，不用系统时间，保证复现）。",
+    "generation_now": "2026-10",
+    "fresh_graduation_dates": [["2026-06", 0.75], ["2025-06", 0.25]],
+    "tech_graduation_years": [2014, 2023],
+    "func_graduation_years": [2013, 2022],
+    "tech_work_span_years": [3, 8],
+    "func_work_span_years": [3, 8],
+    "tech_skill_count": [5, 10],
+    "func_skill_count": [4, 8],
+    "fresh_skill_count": [4, 8],
+    "internship_count": [1, 2],
+    "tech_job_count_choices": [[1, 0.25], [2, 0.5], [3, 0.25]],
+    "func_job_count_choices": [[1, 0.35], [2, 0.5], [3, 0.15]],
+    "skill_add_per_version": [1, 2]
+  }
+}

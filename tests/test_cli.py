@@ -18,7 +18,18 @@ def test_version_flag(capsys):
     assert __version__ in capsys.readouterr().out
 
 
-@pytest.mark.parametrize("cmd", ["import", "search", "screen", "bench", "purge", "gui"])
+@pytest.mark.parametrize("cmd", ["import", "search", "screen", "purge", "gui"])
 def test_stub_commands_exit_2(cmd, capsys):
     assert main([cmd]) == 2
+    assert "尚未实现" in capsys.readouterr().out
+
+
+def test_bench_without_subcommand_shows_usage(capsys):
+    assert main(["bench"]) == 2
+    assert "bench gen" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("sub", ["parse", "match"])
+def test_bench_stub_subcommands_exit_2(sub, capsys):
+    assert main(["bench", sub]) == 2
     assert "尚未实现" in capsys.readouterr().out

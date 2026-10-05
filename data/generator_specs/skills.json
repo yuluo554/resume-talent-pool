@@ -1,0 +1,51 @@
+{
+  "_note": "全部虚构人设所用的技能/证书标签池，仅供合成简历生成器使用。技能在简历内做分隔符/大小写变体渲染，truth 以池内原串为准（解析归一后比对）。",
+  "tech_skills": [
+    "Java", "Python", "MySQL", "Redis", "Spring Boot", "Spring Cloud", "MyBatis",
+    "Docker", "Kubernetes", "Linux", "Git", "Kafka", "Elasticsearch", "MongoDB",
+    "HTML/CSS", "JavaScript", "Vue", "React", "Hive", "Spark", "Flink", "Shell",
+    "Nginx", "RabbitMQ", "微服务", "自动化测试", "Selenium", "JMeter", "Pandas", "机器学习"
+  ],
+  "func_skills": [
+    "Excel", "Word", "PPT", "财务核算", "税务申报", "发票管理", "报表编制",
+    "成本核算", "预算管理", "社保公积金办理", "员工入离职办理", "考勤统计",
+    "招聘渠道维护", "档案管理", "公文写作", "会议组织", "薪酬核算", "固定资产盘点"
+  ],
+  "student_skills": [
+    "C语言", "Java", "Python", "MySQL", "数据结构", "HTML/CSS", "JavaScript",
+    "Linux", "Git", "Office办公软件", "Python爬虫", "SPSS"
+  ],
+  "student_func_skills": [
+    "Excel", "Word", "PPT", "基础会计", "办公自动化", "公文写作", "档案管理", "SPSS"
+  ],
+  "student_certificates": [
+    "CET-4", "CET-6", "计算机二级", "计算机三级", "普通话二级甲等", "C1驾驶证", "初级会计职称"
+  ],
+  "tech_certificates": [
+    "CET-4", "CET-6", "软考中级（软件设计师）", "软考高级（系统分析师）", "PMP", "计算机三级", "C1驾驶证"
+  ],
+  "func_certificates": [
+    "CET-4", "CET-6", "初级会计职称", "中级会计职称", "初级经济师", "人力资源管理师三级", "C1驾驶证", "计算机二级"
+  ],
+  "tech_bullets": [
+    "负责核心模块的设计与开发，保障线上稳定运行",
+    "参与需求评审与技术方案设计，推动项目按期交付",
+    "优化接口性能，平均响应时间明显下降",
+    "编写单元测试与接口文档，提升团队交付质量",
+    "配合运维完成服务升级与故障排查",
+    "参与新人带教与代码评审工作"
+  ],
+  "func_bullets": [
+    "负责日常账务处理与报表编制，确保数据准确",
+    "组织员工入职离职手续办理与档案更新",
+    "统筹办公用品采购与会议安排",
+    "协助完成月度考勤统计与薪酬核算",
+    "对接社保公积金经办事项，按时完成申报",
+    "维护供应商台账并完成对账结算"
+  ],
+  "intern_bullets": [
+    "协助导师完成模块开发与测试用例编写",
+    "参与项目文档整理与会议记录",
+    "协助处理日常数据整理与报表制作"
+  ]
+}

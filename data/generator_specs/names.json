@@ -1,0 +1,477 @@
+{
+  "_note": "全部虚构，仅供合成简历生成器使用。unique_names 供非同名组人员依序取用（顺序影响 seed 复现，勿重排）；homonym_groups 为 plan/05 §2.2 的 5 组同名/同音组。pinyin 由 pypinyin 生成（邮箱本地名素材，同音组拼音相同）。",
+  "unique_names": [
+    {
+      "name": "潘念慈",
+      "pinyin": "pannianci"
+    },
+    {
+      "name": "罗成荫",
+      "pinyin": "luochengyin"
+    },
+    {
+      "name": "张桂芳",
+      "pinyin": "zhangguifang"
+    },
+    {
+      "name": "熊文瑞",
+      "pinyin": "xiongwenrui"
+    },
+    {
+      "name": "毛锦程",
+      "pinyin": "maojincheng"
+    },
+    {
+      "name": "曹峰",
+      "pinyin": "caofeng"
+    },
+    {
+      "name": "丁玉梅",
+      "pinyin": "dingyumei"
+    },
+    {
+      "name": "沈瑞霖",
+      "pinyin": "shenruilin"
+    },
+    {
+      "name": "赵语彤",
+      "pinyin": "zhaoyutong"
+    },
+    {
+      "name": "田成荫",
+      "pinyin": "tianchengyin"
+    },
+    {
+      "name": "傅浩然",
+      "pinyin": "fuhaoran"
+    },
+    {
+      "name": "邹思远",
+      "pinyin": "zousiyuan"
+    },
+    {
+      "name": "谭建平",
+      "pinyin": "tanjianping"
+    },
+    {
+      "name": "丁海峰",
+      "pinyin": "dinghaifeng"
+    },
+    {
+      "name": "陶志强",
+      "pinyin": "taozhiqiang"
+    },
+    {
+      "name": "陆淑仪",
+      "pinyin": "lushuyi"
+    },
+    {
+      "name": "吴燕",
+      "pinyin": "wuyan"
+    },
+    {
+      "name": "雷海峰",
+      "pinyin": "leihaifeng"
+    },
+    {
+      "name": "谢淑华",
+      "pinyin": "xieshuhua"
+    },
+    {
+      "name": "杜桂英",
+      "pinyin": "duguiying"
+    },
+    {
+      "name": "董若曦",
+      "pinyin": "dongruoxi"
+    },
+    {
+      "name": "张丽娟",
+      "pinyin": "zhanglijuan"
+    },
+    {
+      "name": "熊丽娟",
+      "pinyin": "xionglijuan"
+    },
+    {
+      "name": "谢婷",
+      "pinyin": "xieting"
+    },
+    {
+      "name": "曾志明",
+      "pinyin": "cengzhiming"
+    },
+    {
+      "name": "韩淑华",
+      "pinyin": "hanshuhua"
+    },
+    {
+      "name": "龚春兰",
+      "pinyin": "gongchunlan"
+    },
+    {
+      "name": "戴静怡",
+      "pinyin": "daijingyi"
+    },
+    {
+      "name": "陶淑仪",
+      "pinyin": "taoshuyi"
+    },
+    {
+      "name": "林涛",
+      "pinyin": "lintao"
+    },
+    {
+      "name": "杜晨曦",
+      "pinyin": "duchenxi"
+    },
+    {
+      "name": "罗念慈",
+      "pinyin": "luonianci"
+    },
+    {
+      "name": "贺一鸣",
+      "pinyin": "heyiming"
+    },
+    {
+      "name": "严淑华",
+      "pinyin": "yanshuhua"
+    },
+    {
+      "name": "高慧敏",
+      "pinyin": "gaohuimin"
+    },
+    {
+      "name": "曾承宇",
+      "pinyin": "cengchengyu"
+    },
+    {
+      "name": "夏俊杰",
+      "pinyin": "xiajunjie"
+    },
+    {
+      "name": "彭明轩",
+      "pinyin": "pengmingxuan"
+    },
+    {
+      "name": "赵宇航",
+      "pinyin": "zhaoyuhang"
+    },
+    {
+      "name": "苏涛",
+      "pinyin": "sutao"
+    },
+    {
+      "name": "吴天翊",
+      "pinyin": "wutianyi"
+    },
+    {
+      "name": "钱雅静",
+      "pinyin": "qianyajing"
+    },
+    {
+      "name": "王静怡",
+      "pinyin": "wangjingyi"
+    },
+    {
+      "name": "方海峰",
+      "pinyin": "fanghaifeng"
+    },
+    {
+      "name": "江晶",
+      "pinyin": "jiangjing"
+    },
+    {
+      "name": "戴海峰",
+      "pinyin": "daihaifeng"
+    },
+    {
+      "name": "孙晶",
+      "pinyin": "sunjing"
+    },
+    {
+      "name": "沈晓芳",
+      "pinyin": "shenxiaofang"
+    },
+    {
+      "name": "廖德华",
+      "pinyin": "liaodehua"
+    },
+    {
+      "name": "邵逸凡",
+      "pinyin": "shaoyifan"
+    },
+    {
+      "name": "金嘉禾",
+      "pinyin": "jinjiahe"
+    },
+    {
+      "name": "龙逸凡",
+      "pinyin": "longyifan"
+    },
+    {
+      "name": "钟建平",
+      "pinyin": "zhongjianping"
+    },
+    {
+      "name": "刘一鸣",
+      "pinyin": "liuyiming"
+    },
+    {
+      "name": "段亮",
+      "pinyin": "duanliang"
+    },
+    {
+      "name": "彭海燕",
+      "pinyin": "penghaiyan"
+    },
+    {
+      "name": "姚晶",
+      "pinyin": "yaojing"
+    },
+    {
+      "name": "李雅琴",
+      "pinyin": "liyaqin"
+    },
+    {
+      "name": "尹静文",
+      "pinyin": "yinjingwen"
+    },
+    {
+      "name": "郝雪",
+      "pinyin": "haoxue"
+    },
+    {
+      "name": "尹一鸣",
+      "pinyin": "yinyiming"
+    },
+    {
+      "name": "毛德华",
+      "pinyin": "maodehua"
+    },
+    {
+      "name": "江天宇",
+      "pinyin": "jiangtianyu"
+    },
+    {
+      "name": "傅慕青",
+      "pinyin": "fumuqing"
+    },
+    {
+      "name": "李桂英",
+      "pinyin": "liguiying"
+    },
+    {
+      "name": "王乐彤",
+      "pinyin": "wangletong"
+    },
+    {
+      "name": "陈勇",
+      "pinyin": "chenyong"
+    },
+    {
+      "name": "张卓尔",
+      "pinyin": "zhangzhuoer"
+    },
+    {
+      "name": "孙博文",
+      "pinyin": "sunbowen"
+    },
+    {
+      "name": "田淑仪",
+      "pinyin": "tianshuyi"
+    },
+    {
+      "name": "许晨曦",
+      "pinyin": "xuchenxi"
+    },
+    {
+      "name": "毛丹妮",
+      "pinyin": "maodanni"
+    },
+    {
+      "name": "段明轩",
+      "pinyin": "duanmingxuan"
+    },
+    {
+      "name": "杜志强",
+      "pinyin": "duzhiqiang"
+    },
+    {
+      "name": "叶卓尔",
+      "pinyin": "yezhuoer"
+    },
+    {
+      "name": "贾伯懿",
+      "pinyin": "jiaboyi"
+    },
+    {
+      "name": "胡勇",
+      "pinyin": "huyong"
+    },
+    {
+      "name": "侯天翊",
+      "pinyin": "houtianyi"
+    },
+    {
+      "name": "田乐彤",
+      "pinyin": "tianletong"
+    },
+    {
+      "name": "朱岚",
+      "pinyin": "zhulan"
+    },
+    {
+      "name": "潘德华",
+      "pinyin": "pandehua"
+    },
+    {
+      "name": "袁远航",
+      "pinyin": "yuanyuanhang"
+    },
+    {
+      "name": "高勇",
+      "pinyin": "gaoyong"
+    },
+    {
+      "name": "杨海燕",
+      "pinyin": "yanghaiyan"
+    },
+    {
+      "name": "龚泽洋",
+      "pinyin": "gongzeyang"
+    },
+    {
+      "name": "熊蕾",
+      "pinyin": "xionglei"
+    },
+    {
+      "name": "贾泽洋",
+      "pinyin": "jiazeyang"
+    },
+    {
+      "name": "薛燕",
+      "pinyin": "xueyan"
+    },
+    {
+      "name": "金雨泽",
+      "pinyin": "jinyuze"
+    },
+    {
+      "name": "金海峰",
+      "pinyin": "jinhaifeng"
+    },
+    {
+      "name": "蒋晓东",
+      "pinyin": "jiangxiaodong"
+    },
+    {
+      "name": "钟逸凡",
+      "pinyin": "zhongyifan"
+    },
+    {
+      "name": "郑琪",
+      "pinyin": "zhengqi"
+    },
+    {
+      "name": "戴嘉禾",
+      "pinyin": "daijiahe"
+    },
+    {
+      "name": "高瑞霖",
+      "pinyin": "gaoruilin"
+    },
+    {
+      "name": "孙俊杰",
+      "pinyin": "sunjunjie"
+    },
+    {
+      "name": "秦思远",
+      "pinyin": "qinsiyuan"
+    },
+    {
+      "name": "林桂英",
+      "pinyin": "linguiying"
+    },
+    {
+      "name": "邵志强",
+      "pinyin": "shaozhiqiang"
+    },
+    {
+      "name": "孟泽洋",
+      "pinyin": "mengzeyang"
+    },
+    {
+      "name": "卢敏",
+      "pinyin": "lumin"
+    },
+    {
+      "name": "朱静文",
+      "pinyin": "zhujingwen"
+    },
+    {
+      "name": "蔡春兰",
+      "pinyin": "caichunlan"
+    },
+    {
+      "name": "刘雪",
+      "pinyin": "liuxue"
+    },
+    {
+      "name": "韩文博",
+      "pinyin": "hanwenbo"
+    },
+    {
+      "name": "谭明轩",
+      "pinyin": "tanmingxuan"
+    },
+    {
+      "name": "陆天宇",
+      "pinyin": "lutianyu"
+    },
+    {
+      "name": "石丽华",
+      "pinyin": "shilihua"
+    },
+    {
+      "name": "石锦程",
+      "pinyin": "shijincheng"
+    },
+    {
+      "name": "高国栋",
+      "pinyin": "gaoguodong"
+    }
+  ],
+  "homonym_groups": [
+    {
+      "name_a": "李静",
+      "name_b": "李静",
+      "pinyin": "lijing",
+      "kind": "同名"
+    },
+    {
+      "name_a": "王强",
+      "name_b": "王强",
+      "pinyin": "wangqiang",
+      "kind": "同名"
+    },
+    {
+      "name_a": "张伟",
+      "name_b": "张玮",
+      "pinyin": "zhangwei",
+      "kind": "同音"
+    },
+    {
+      "name_a": "刘洋",
+      "name_b": "刘扬",
+      "pinyin": "liuyang",
+      "kind": "同音"
+    },
+    {
+      "name_a": "陈鹏",
+      "name_b": "陈朋",
+      "pinyin": "chenpeng",
+      "kind": "同音"
+    }
+  ]
+}

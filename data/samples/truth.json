@@ -1,0 +1,1087 @@
+{
+  "generator": "resume-talent-pool M1",
+  "truth_version": 1,
+  "seed": 20261005,
+  "persons": [
+    {
+      "person_id": "p001",
+      "same_person_group": "p001",
+      "template": "tech",
+      "family": "tech",
+      "name": "潘念慈",
+      "resumes": [
+        {
+          "file": "p001_r01_v1.docx",
+          "format": "docx",
+          "layout": "sectioned",
+          "noise": [
+            "separator_variant"
+          ],
+          "truth_fields": {
+            "name": "潘念慈",
+            "phone": "19900000001",
+            "degree": "本科",
+            "school": "南湖师范学院",
+            "major": "信息管理与信息系统",
+            "graduation_date": "2018-02"
+          },
+          "truth_experiences": [
+            {
+              "company": "极光数据",
+              "title": "Java开发工程师",
+              "start": "2018-10",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "JavaScript",
+            "Nginx",
+            "Kubernetes",
+            "Spring Cloud",
+            "Vue",
+            "MyBatis",
+            "Kafka",
+            "Pandas",
+            "JMeter",
+            "Java"
+          ],
+          "truth_certificates": [
+            "C1驾驶证",
+            "软考中级（软件设计师）",
+            "PMP"
+          ]
+        }
+      ]
+    },
+    {
+      "person_id": "p002",
+      "same_person_group": "p002",
+      "template": "fresh",
+      "family": "tech",
+      "name": "罗成荫",
+      "resumes": [
+        {
+          "file": "p002_r01_v1.txt",
+          "format": "txt",
+          "layout": "sectioned",
+          "noise": [
+            "multiline_experience"
+          ],
+          "truth_fields": {
+            "name": "罗成荫",
+            "phone": "19900000002",
+            "email": "luochengyin002@example.com",
+            "degree": "本科",
+            "school": "南湖师范学院",
+            "major": "信息管理与信息系统",
+            "desired_position": "运维工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "磐石系统",
+              "title": "Java开发实习生",
+              "start": "2026-01",
+              "end": "2026-04"
+            },
+            {
+              "company": "临江数媒",
+              "title": "前端开发实习生",
+              "start": "2025-12",
+              "end": "2026-05"
+            }
+          ],
+          "truth_skills": [
+            "C语言",
+            "SPSS",
+            "Python爬虫",
+            "Git",
+            "Linux",
+            "Python",
+            "HTML/CSS"
+          ],
+          "truth_certificates": [
+            "初级会计职称",
+            "CET-6",
+            "CET-4",
+            "计算机三级"
+          ],
+          "encoding": "utf-8"
+        },
+        {
+          "file": "p002_r02_v2.docx",
+          "format": "docx",
+          "layout": "labeled",
+          "noise": [],
+          "truth_fields": {
+            "name": "罗成荫",
+            "phone": "19900000002",
+            "email": "luochengyin002@example.com",
+            "degree": "本科",
+            "school": "南湖师范学院",
+            "major": "信息管理与信息系统",
+            "graduation_date": "2026-06",
+            "desired_position": "运维工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "磐石系统",
+              "title": "Java开发实习生",
+              "start": "2026-01",
+              "end": "2026-04"
+            },
+            {
+              "company": "临江数媒",
+              "title": "前端开发实习生",
+              "start": "2025-12",
+              "end": "2026-05"
+            },
+            {
+              "company": "简仓科技",
+              "title": "大数据开发工程师",
+              "start": "2026-07",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "C语言",
+            "SPSS",
+            "Python爬虫",
+            "Git",
+            "Linux",
+            "Python",
+            "HTML/CSS",
+            "Office办公软件"
+          ],
+          "truth_certificates": [
+            "初级会计职称",
+            "CET-6",
+            "CET-4",
+            "计算机三级"
+          ]
+        }
+      ]
+    },
+    {
+      "person_id": "p003",
+      "same_person_group": "p003",
+      "template": "tech",
+      "family": "tech",
+      "name": "张桂芳",
+      "resumes": [
+        {
+          "file": "p003_r01_v1.pdf",
+          "format": "pdf",
+          "layout": "sectioned",
+          "noise": [],
+          "truth_fields": {
+            "name": "张桂芳",
+            "phone": "19900000003",
+            "degree": "本科",
+            "school": "白石理工学院",
+            "major": "统计学",
+            "graduation_date": "2022-01",
+            "desired_position": "Java后端开发工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "云脉科技",
+              "title": "测试工程师",
+              "start": "2022-10",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "RabbitMQ",
+            "Kafka",
+            "Elasticsearch",
+            "Spring Cloud",
+            "Nginx",
+            "自动化测试",
+            "HTML/CSS",
+            "Python",
+            "JMeter"
+          ],
+          "truth_certificates": [
+            "软考中级（软件设计师）"
+          ]
+        },
+        {
+          "file": "p003_r02_v2.docx",
+          "format": "docx",
+          "layout": "sectioned",
+          "noise": [
+            "docx_table",
+            "multiline_experience"
+          ],
+          "truth_fields": {
+            "name": "张桂芳",
+            "phone": "19900000003",
+            "email": "zhangguifang003@example.com",
+            "degree": "本科",
+            "school": "白石理工学院",
+            "major": "统计学",
+            "graduation_date": "2022-01",
+            "desired_position": "Java后端开发工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "云脉科技",
+              "title": "测试工程师",
+              "start": "2022-10",
+              "end": "2024-09"
+            },
+            {
+              "company": "光年数创",
+              "title": "运维工程师",
+              "start": "2024-10",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "RabbitMQ",
+            "Kafka",
+            "Elasticsearch",
+            "Spring Cloud",
+            "Nginx",
+            "自动化测试",
+            "HTML/CSS",
+            "Python",
+            "JMeter",
+            "机器学习"
+          ],
+          "truth_certificates": [
+            "软考中级（软件设计师）"
+          ]
+        },
+        {
+          "file": "p003_r03_v3.pdf",
+          "format": "pdf",
+          "layout": "labeled",
+          "noise": [
+            "fullwidth_digit"
+          ],
+          "truth_fields": {
+            "name": "张桂芳",
+            "phone": "19900000003",
+            "email": "zhangguifang003@example.com",
+            "degree": "本科",
+            "school": "白石理工学院",
+            "desired_position": "算法工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "云脉科技",
+              "title": "测试工程师",
+              "start": "2022-10",
+              "end": "2024-09"
+            },
+            {
+              "company": "光年数创",
+              "title": "运维工程师",
+              "start": "2024-10",
+              "end": "2025-12"
+            },
+            {
+              "company": "青枫互联",
+              "title": "Java开发工程师",
+              "start": "2025-12",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "RabbitMQ",
+            "Kafka",
+            "Elasticsearch",
+            "Spring Cloud",
+            "Nginx",
+            "自动化测试",
+            "HTML/CSS",
+            "Python",
+            "JMeter",
+            "机器学习",
+            "Hive",
+            "Git"
+          ],
+          "truth_certificates": [
+            "软考中级（软件设计师）"
+          ]
+        }
+      ]
+    },
+    {
+      "person_id": "p004",
+      "same_person_group": "p004",
+      "template": "fresh",
+      "family": "tech",
+      "name": "熊文瑞",
+      "resumes": [
+        {
+          "file": "p004_r01_v1.docx",
+          "format": "docx",
+          "layout": "labeled",
+          "noise": [
+            "multiline_experience"
+          ],
+          "truth_fields": {
+            "name": "熊文瑞",
+            "phone": "19900000004",
+            "email": "xiongwenrui004@example.com",
+            "degree": "本科",
+            "school": "鹤鸣师范学院",
+            "major": "数据科学与大数据技术",
+            "graduation_date": "2026-06",
+            "desired_position": "算法工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "星河软件",
+              "title": "测试实习生",
+              "start": "2025-12",
+              "end": "2026-02"
+            }
+          ],
+          "truth_skills": [
+            "SPSS",
+            "Office办公软件",
+            "C语言",
+            "MySQL"
+          ],
+          "truth_certificates": [
+            "计算机二级",
+            "C1驾驶证",
+            "CET-4"
+          ]
+        },
+        {
+          "file": "p004_r02_v2.pdf",
+          "format": "pdf",
+          "layout": "labeled",
+          "noise": [],
+          "truth_fields": {
+            "name": "熊文瑞",
+            "phone": "19900000004",
+            "email": "xiongwenrui004@example.com",
+            "degree": "本科",
+            "school": "鹤鸣师范学院",
+            "major": "数据科学与大数据技术"
+          },
+          "truth_experiences": [
+            {
+              "company": "星河软件",
+              "title": "测试实习生",
+              "start": "2025-12",
+              "end": "2026-02"
+            },
+            {
+              "company": "逐浪科技",
+              "title": "移动端开发工程师",
+              "start": "2026-08",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "SPSS",
+            "Office办公软件",
+            "C语言",
+            "MySQL",
+            "Git",
+            "Linux"
+          ],
+          "truth_certificates": [
+            "计算机二级",
+            "C1驾驶证",
+            "CET-4"
+          ]
+        }
+      ]
+    },
+    {
+      "person_id": "p005",
+      "same_person_group": "p005",
+      "template": "func",
+      "family": "tech",
+      "name": "毛锦程",
+      "resumes": [
+        {
+          "file": "p005_r01_v1.txt",
+          "format": "txt",
+          "layout": "labeled",
+          "noise": [
+            "crlf"
+          ],
+          "truth_fields": {
+            "name": "毛锦程",
+            "phone": "19900000005",
+            "degree": "硕士",
+            "school": "听澜学院",
+            "major": "网络工程",
+            "graduation_date": "2022-12",
+            "desired_position": "大数据开发工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "元界信息",
+              "title": "Java开发工程师",
+              "start": "2023-10",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "Spring Boot",
+            "MySQL",
+            "Selenium",
+            "Vue",
+            "Hive",
+            "Shell",
+            "Pandas",
+            "JavaScript",
+            "Flink",
+            "Spark"
+          ],
+          "truth_certificates": [],
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "person_id": "p006",
+      "same_person_group": "p006",
+      "template": "func",
+      "family": "tech",
+      "name": "曹峰",
+      "resumes": [
+        {
+          "file": "p006_r01_v1.pdf",
+          "format": "pdf",
+          "layout": "sectioned",
+          "noise": [],
+          "truth_fields": {
+            "name": "曹峰",
+            "phone": "19900000006",
+            "email": "caofeng006@example.net",
+            "degree": "本科",
+            "school": "临海财经大学",
+            "major": "软件工程",
+            "graduation_date": "2018-01",
+            "desired_position": "测试开发工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "极光数据",
+              "title": "前端开发工程师",
+              "start": "2018-10",
+              "end": "2021-10"
+            },
+            {
+              "company": "千帆网络",
+              "title": "Python开发工程师",
+              "start": "2021-11",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "Redis",
+            "Linux",
+            "机器学习",
+            "Spring Boot",
+            "Docker"
+          ],
+          "truth_certificates": [
+            "CET-6",
+            "计算机三级"
+          ]
+        },
+        {
+          "file": "p006_r02_v2.txt",
+          "format": "txt",
+          "layout": "sectioned",
+          "noise": [
+            "separator_variant"
+          ],
+          "truth_fields": {
+            "name": "曹峰",
+            "phone": "19900000006",
+            "email": "caofeng006@example.com",
+            "school": "临海财经大学",
+            "major": "软件工程",
+            "desired_position": "Java后端开发工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "极光数据",
+              "title": "前端开发工程师",
+              "start": "2018-10",
+              "end": "2021-10"
+            },
+            {
+              "company": "千帆网络",
+              "title": "Python开发工程师",
+              "start": "2021-11",
+              "end": "2024-02"
+            },
+            {
+              "company": "光年数创",
+              "title": "运维工程师",
+              "start": "2024-02",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "Redis",
+            "Linux",
+            "机器学习",
+            "Spring Boot",
+            "Docker",
+            "JavaScript",
+            "Spark"
+          ],
+          "truth_certificates": [
+            "CET-6",
+            "计算机三级"
+          ],
+          "encoding": "utf-8"
+        },
+        {
+          "file": "p006_r03_v3.txt",
+          "format": "txt",
+          "layout": "sectioned",
+          "noise": [
+            "gbk_encoding_txt",
+            "multiline_experience"
+          ],
+          "truth_fields": {
+            "name": "曹峰",
+            "phone": "19900000006",
+            "email": "caofeng006@example.com",
+            "degree": "本科",
+            "school": "临海财经大学",
+            "major": "软件工程",
+            "graduation_date": "2018-01",
+            "desired_position": "测试开发工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "极光数据",
+              "title": "前端开发工程师",
+              "start": "2018-10",
+              "end": "2021-10"
+            },
+            {
+              "company": "千帆网络",
+              "title": "Python开发工程师",
+              "start": "2021-11",
+              "end": "2024-02"
+            },
+            {
+              "company": "光年数创",
+              "title": "运维工程师",
+              "start": "2024-02",
+              "end": "2026-06"
+            },
+            {
+              "company": "白鹭云联",
+              "title": "Java开发工程师",
+              "start": "2026-08",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "Redis",
+            "Linux",
+            "机器学习",
+            "Spring Boot",
+            "Docker",
+            "JavaScript",
+            "Spark",
+            "Git"
+          ],
+          "truth_certificates": [
+            "CET-6",
+            "计算机三级"
+          ],
+          "encoding": "gbk"
+        }
+      ]
+    },
+    {
+      "person_id": "p007",
+      "same_person_group": "p007",
+      "template": "tech",
+      "family": "tech",
+      "name": "丁玉梅",
+      "resumes": [
+        {
+          "file": "p007_r01_v1.pdf",
+          "format": "pdf",
+          "layout": "labeled",
+          "noise": [],
+          "truth_fields": {
+            "name": "丁玉梅",
+            "phone": "19900000007",
+            "email": "dingyumei007@example.com",
+            "degree": "硕士",
+            "school": "星城理工学院",
+            "major": "网络工程",
+            "graduation_date": "2022-12",
+            "desired_position": "Java后端开发工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "泊松科技",
+              "title": "前端开发工程师",
+              "start": "2023-10",
+              "end": "2024-11"
+            },
+            {
+              "company": "青枫互联",
+              "title": "Java开发工程师",
+              "start": "2025-01",
+              "end": "2025-09"
+            },
+            {
+              "company": "极光数据",
+              "title": "Java开发工程师",
+              "start": "2025-11",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "Selenium",
+            "Spark",
+            "JMeter",
+            "Java",
+            "MongoDB",
+            "Pandas",
+            "Spring Boot",
+            "HTML/CSS"
+          ],
+          "truth_certificates": [
+            "PMP",
+            "软考高级（系统分析师）",
+            "计算机三级"
+          ]
+        },
+        {
+          "file": "p007_r02_v2.pdf",
+          "format": "pdf",
+          "layout": "labeled",
+          "noise": [
+            "fullwidth_digit",
+            "multiline_experience",
+            "separator_variant"
+          ],
+          "truth_fields": {
+            "name": "丁玉梅",
+            "phone": "19900000007",
+            "email": "dingyumei007@example.com",
+            "degree": "硕士",
+            "school": "星城理工学院",
+            "major": "网络工程",
+            "graduation_date": "2022-12"
+          },
+          "truth_experiences": [
+            {
+              "company": "泊松科技",
+              "title": "前端开发工程师",
+              "start": "2023-10",
+              "end": "2024-11"
+            },
+            {
+              "company": "青枫互联",
+              "title": "Java开发工程师",
+              "start": "2025-01",
+              "end": "2025-09"
+            },
+            {
+              "company": "极光数据",
+              "title": "Java开发工程师",
+              "start": "2025-11",
+              "end": "2027-01"
+            },
+            {
+              "company": "深蓝智能",
+              "title": "Python开发工程师",
+              "start": "2027-01",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "Selenium",
+            "Spark",
+            "JMeter",
+            "Java",
+            "MongoDB",
+            "Pandas",
+            "Spring Boot",
+            "HTML/CSS",
+            "微服务"
+          ],
+          "truth_certificates": []
+        }
+      ]
+    },
+    {
+      "person_id": "p008",
+      "same_person_group": "p008",
+      "template": "fresh",
+      "family": "tech",
+      "name": "沈瑞霖",
+      "resumes": [
+        {
+          "file": "p008_r01_v1.docx",
+          "format": "docx",
+          "layout": "sectioned",
+          "noise": [
+            "separator_variant"
+          ],
+          "truth_fields": {
+            "name": "沈瑞霖",
+            "email": "shenruilin008@example.com",
+            "degree": "硕士",
+            "school": "望海学院",
+            "major": "计算机科学与技术",
+            "graduation_date": "2025-06",
+            "desired_position": "算法工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "光年数创",
+              "title": "前端开发实习生",
+              "start": "2024-12",
+              "end": "2025-02"
+            }
+          ],
+          "truth_skills": [
+            "Java",
+            "Python爬虫",
+            "Python",
+            "MySQL",
+            "C语言",
+            "JavaScript"
+          ],
+          "truth_certificates": [
+            "计算机三级",
+            "普通话二级甲等",
+            "CET-6",
+            "C1驾驶证"
+          ]
+        }
+      ]
+    },
+    {
+      "person_id": "p009",
+      "same_person_group": "p009",
+      "template": "func",
+      "family": "tech",
+      "name": "赵语彤",
+      "resumes": [
+        {
+          "file": "p009_r01_v1.pdf",
+          "format": "pdf",
+          "layout": "sectioned",
+          "noise": [],
+          "truth_fields": {
+            "name": "赵语彤",
+            "phone": "19900000009",
+            "email": "zhaoyutong009@example.com",
+            "degree": "本科",
+            "school": "临海财经大学",
+            "major": "电子信息工程",
+            "desired_position": "算法工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "磐石系统",
+              "title": "大数据开发工程师",
+              "start": "2018-10",
+              "end": "2023-04"
+            },
+            {
+              "company": "千帆网络",
+              "title": "产品经理",
+              "start": "2023-05",
+              "end": "2024-12"
+            },
+            {
+              "company": "白鹭云联",
+              "title": "数据分析师",
+              "start": "2025-03",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "Elasticsearch",
+            "JavaScript",
+            "Flink",
+            "MyBatis",
+            "Spring Boot",
+            "Shell",
+            "微服务",
+            "Kubernetes",
+            "自动化测试"
+          ],
+          "truth_certificates": [
+            "PMP"
+          ]
+        },
+        {
+          "file": "p009_r02_v2.docx",
+          "format": "docx",
+          "layout": "labeled",
+          "noise": [],
+          "truth_fields": {
+            "name": "赵语彤",
+            "phone": "19900050009",
+            "email": "zhaoyutong009@example.net",
+            "degree": "本科",
+            "school": "临海财经大学",
+            "major": "电子信息工程",
+            "graduation_date": "2018-06",
+            "desired_position": "算法工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "磐石系统",
+              "title": "大数据开发工程师",
+              "start": "2018-10",
+              "end": "2023-04"
+            },
+            {
+              "company": "千帆网络",
+              "title": "产品经理",
+              "start": "2023-05",
+              "end": "2024-12"
+            },
+            {
+              "company": "白鹭云联",
+              "title": "数据分析师",
+              "start": "2025-03",
+              "end": "2026-10"
+            },
+            {
+              "company": "泊松科技",
+              "title": "前端开发工程师",
+              "start": "2026-10",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "Elasticsearch",
+            "JavaScript",
+            "Flink",
+            "MyBatis",
+            "Spring Boot",
+            "Shell",
+            "微服务",
+            "Kubernetes",
+            "自动化测试",
+            "HTML/CSS",
+            "Kafka"
+          ],
+          "truth_certificates": [
+            "PMP"
+          ]
+        }
+      ]
+    },
+    {
+      "person_id": "p010",
+      "same_person_group": "p010",
+      "template": "fresh",
+      "family": "func",
+      "name": "李静",
+      "resumes": [
+        {
+          "file": "p010_r01_v1.docx",
+          "format": "docx",
+          "layout": "labeled",
+          "noise": [],
+          "truth_fields": {
+            "name": "李静",
+            "phone": "19900000010",
+            "email": "lijing010@example.com",
+            "degree": "本科",
+            "major": "行政管理",
+            "desired_position": "会计"
+          },
+          "truth_experiences": [
+            {
+              "company": "汇金财务顾问",
+              "title": "行政助理（实习）",
+              "start": "2026-01",
+              "end": "2026-04"
+            },
+            {
+              "company": "华信税务师事务所",
+              "title": "会计助理（实习）",
+              "start": "2026-02",
+              "end": "2026-06"
+            }
+          ],
+          "truth_skills": [
+            "档案管理",
+            "PPT",
+            "Excel",
+            "办公自动化",
+            "基础会计",
+            "SPSS",
+            "公文写作",
+            "Word"
+          ],
+          "truth_certificates": [
+            "普通话二级甲等",
+            "计算机三级"
+          ]
+        },
+        {
+          "file": "p010_r02_v2.pdf",
+          "format": "pdf",
+          "layout": "labeled",
+          "noise": [
+            "pseudo_space"
+          ],
+          "truth_fields": {
+            "name": "李静",
+            "phone": "19900000010",
+            "school": "青川师范大学",
+            "graduation_date": "2026-06"
+          },
+          "truth_experiences": [
+            {
+              "company": "汇金财务顾问",
+              "title": "行政助理（实习）",
+              "start": "2026-01",
+              "end": "2026-04"
+            },
+            {
+              "company": "华信税务师事务所",
+              "title": "会计助理（实习）",
+              "start": "2026-02",
+              "end": "2026-06"
+            },
+            {
+              "company": "正德管理咨询",
+              "title": "人事主管",
+              "start": "2026-08",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "档案管理",
+            "PPT",
+            "Excel",
+            "办公自动化",
+            "基础会计",
+            "SPSS",
+            "公文写作",
+            "Word"
+          ],
+          "truth_certificates": [
+            "普通话二级甲等",
+            "计算机三级"
+          ]
+        }
+      ]
+    },
+    {
+      "person_id": "p011",
+      "same_person_group": "p011",
+      "template": "tech",
+      "family": "tech",
+      "name": "李静",
+      "resumes": [
+        {
+          "file": "p011_r01_v1.docx",
+          "format": "docx",
+          "layout": "sectioned",
+          "noise": [],
+          "truth_fields": {
+            "name": "李静",
+            "phone": "19900000011",
+            "email": "lijing011@example.net",
+            "degree": "硕士",
+            "school": "星城理工学院",
+            "major": "数据科学与大数据技术",
+            "graduation_date": "2020-09",
+            "desired_position": "运维工程师"
+          },
+          "truth_experiences": [
+            {
+              "company": "千帆网络",
+              "title": "数据分析师",
+              "start": "2020-10",
+              "end": "2024-01"
+            },
+            {
+              "company": "元界信息",
+              "title": "前端开发工程师",
+              "start": "2024-03",
+              "end": "2025-11"
+            },
+            {
+              "company": "深蓝智能",
+              "title": "产品经理",
+              "start": "2025-11",
+              "end": null
+            }
+          ],
+          "truth_skills": [
+            "Python",
+            "Vue",
+            "Flink",
+            "自动化测试",
+            "MongoDB",
+            "Spring Cloud",
+            "Git"
+          ],
+          "truth_certificates": [
+            "PMP"
+          ]
+        }
+      ]
+    }
+  ],
+  "relations": {
+    "same_person_groups": [
+      [
+        "p001"
+      ],
+      [
+        "p002"
+      ],
+      [
+        "p003"
+      ],
+      [
+        "p004"
+      ],
+      [
+        "p005"
+      ],
+      [
+        "p006"
+      ],
+      [
+        "p007"
+      ],
+      [
+        "p008"
+      ],
+      [
+        "p009"
+      ],
+      [
+        "p010"
+      ],
+      [
+        "p011"
+      ]
+    ],
+    "homonym_groups": [
+      [
+        "p010",
+        "p011"
+      ]
+    ]
+  }
+}

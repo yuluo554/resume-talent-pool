@@ -22,6 +22,8 @@ jobs:
       - name: Install
         run: |
           python -m pip install -U pip
-          pip install -e ".[dev]"
+          # 依赖纪律：测试期真实 import 生成器（reportlab/python-docx）与抽取校验
+          # （pdfplumber）→ dev 之外显式安装 gen+parse，禁止测试靠 importorskip 静默跳过
+          pip install -e ".[dev,parse,gen]"
       - name: Test
         run: pytest
