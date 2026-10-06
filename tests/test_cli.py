@@ -1,4 +1,7 @@
-"""CLI 冒烟：帮助/版本正常返回，未点亮子命令退出码 2 且不崩溃（降级纪律）。"""
+"""CLI 冒烟：帮助/版本正常返回，未点亮子命令退出码 2 且不崩溃（降级纪律）。
+
+M3 起 import/search 点亮（点亮路径测试见 tests/test_pipeline.py）。
+"""
 
 import pytest
 
@@ -18,7 +21,7 @@ def test_version_flag(capsys):
     assert __version__ in capsys.readouterr().out
 
 
-@pytest.mark.parametrize("cmd", ["import", "search", "screen", "purge", "gui"])
+@pytest.mark.parametrize("cmd", ["screen", "purge", "gui"])
 def test_stub_commands_exit_2(cmd, capsys):
     assert main([cmd]) == 2
     assert "尚未实现" in capsys.readouterr().out
@@ -38,3 +41,9 @@ def test_bench_parse_requires_data_dir(capsys):
 def test_bench_match_stub_exit_2(capsys):
     assert main(["bench", "match"]) == 2
     assert "尚未实现" in capsys.readouterr().out
+
+
+def test_search_requires_existing_db(capsys, tmp_path):
+    """search 指向不存在的库文件：空库视为无匹配，不崩溃。"""
+    assert main(["search", "张三", "--db", str(tmp_path / "empty.db")]) == 0
+    assert "无匹配候选人" in capsys.readouterr().out
