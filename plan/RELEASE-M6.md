@@ -85,16 +85,19 @@
      从未暴露）→ pin `reportlab>=3.6,<4`（3.6.13 无该调用且官方支持 py3.11）。
 - 验证结果（pip 走清华镜像为本机网络适配，README 未改）：
   - [x] README 逐条：venv 创建→升级 pip→editable 安装（pdfplumber 0.11.5/python-docx 1.1.2/pypinyin 0.55.0/reportlab 3.6.13 均在 pin 内）→pytest→`resume-talent-pool --version`（0.1.0）
-  - [x] pytest 收集数 **152 = dev 一致**（M5 基线 150 + 审计守门 2）；干净 venv 144 过 + 8 skip
+  - [x] pytest 收集数 **152 = dev 一致**（M5 基线 150 + 审计守门 2；验证时点值）；干净 venv 144 过 + 8 skip
         （7×requires_qt 未装 PySide6 + 1×降级路径在缺依赖态执行）——差异逐项归因到声明式跳过；
-        全量单进程在干净 venv 触发随机崩溃家族 → 分 5 批跑全绿（33/35/38/38+8s）
+        全量单进程在干净 venv 触发随机崩溃家族 → 分 5 批跑全绿（33/35/38/38+8s）。
+        注：验证后技术报告结构守门 +1 → **dev/CI 对照数 153**（CI 四矩阵即持续干净环境验证）
   - [x] bench 三连：gen 178 份 + parse 宏 F1=1.0 + match P=1.0/R=0.9583/误合并 0/待确认 9（同类 9/跨组 0）——与 M4/M5 回归锚一致
   - [x] CLI 全链路：import（merged 9/new 11）→ search（FTS 命中、脱敏默认开）→ screen（三态矩阵+匹配分）→ purge（确认词非交互拦截正确；stdin 确认后真删除 candidates_fts 11 行 + imports/ 原件 20 个 326252 字节）
   - [x] gui：追加安装 `.[gui]`（PySide6 6.6.3.1）→ `gui --smoke` 全流程 `smoke ok: files=3 candidates=2 matrix=2 pages=5 purge_candidates=2`（offscreen 无字体告警为已知现象，报告文件正常）
 
 ## 3. 技术报告
-- [ ] docs/技术报告.md 定稿 + docx 程序化生成（生成器脚本入仓，禁止手改产物）
-- [ ] 数据台账登记 + 二进制白名单 + 守门测试三联动
+- [x] docs/技术报告.md 定稿（八大节：摘要/架构/解析方案/实体归一/合规设计/评测基准/工程实践/边界免责）
+- [x] docx 程序化生成（scripts/make_report_docx.py，生成器标记写入 docProps；禁止手改产物）
+- [x] 数据台账登记（data/README.md）+ 二进制白名单 sha256（18 项入审计硬门）+ 结构守门测试三联动
+- 收集数影响：+1（test_report_docx_generated_by_script）→ 153
 
 ## 4. 建仓与 CI
 - [ ] `gh repo create`（公开、无 `--push`）→ SSH push → 四矩阵绿；push 数=run 数对账
