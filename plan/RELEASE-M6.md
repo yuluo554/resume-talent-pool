@@ -100,8 +100,9 @@
 - 收集数影响：+1（test_report_docx_generated_by_script）→ 153
 
 ## 4. 建仓与 CI
-- [ ] `gh repo create`（公开、无 `--push`）→ SSH push → 四矩阵绿；push 数=run 数对账
-- 记录（CI run id / 结论）：待回填
+- [x] `gh repo create yuluo554/resume-talent-pool --public --source . --remote origin`（**无 `--push`**）→ `git remote set-url origin git@github.com:yuluo554/resume-talent-pool.git`（SSH）→ `git push -u origin main` **一次成**（2026-10-06，run 37410684588）
+- [x] CI 四矩阵首跑全绿（2m12s：ubuntu/windows × py3.8/3.11）——M0 期配齐 eol=lf/依赖显式装齐/守门测试的前置工程兑现；**push 数 = run 数 = 1**
+- 记录：推送前审计 tracked OK；tag push 未配触发（ci.yml 仅 push/pr/workflow_dispatch）——打 tag 不产生第二轮 run，如实记录
 
 ## 5. Release 产物
 - [ ] exe 重建 + `resume-talent-pool-0.1.0-win64.zip` sha256 留档
