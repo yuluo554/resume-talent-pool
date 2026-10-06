@@ -25,3 +25,6 @@ reports/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# 打包配置入仓（构建配方，D-013；dist/build 产物不入仓）
+!resume-talent-pool.spec

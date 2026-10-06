@@ -10,6 +10,10 @@ D-009/D-023）。表结构定稿自 plan/04 §5 草案，M3 落地增量：
 - merge_conflicts.field='candidate_merge' 表示"待人工确认的候选人合并"
   （option_a=既有候选人 id，option_b=新建候选人 id，status='pending'）。
 
+M5 增量：settings 读写与脱敏开关（mask_pii，默认开，plan/04 §6）；screening_cards()
+为 JD 初筛供卡（主档字段+全部经历+技能标签，CLI screen 与 GUI 初筛页共用）；
+导入原件副本目录 imports/ 落在库文件同级（pipeline 拷贝，purge 一键清除删除）。
+
 库文件默认位置 %APPDATA%/resume-talent-pool/talent.db（D-015，非 Windows 退回
 ~/.resume-talent-pool/）；file_sha256 UNIQUE 兼做导入去重。
 """
@@ -27,6 +31,10 @@ from ..normalize import matcher, merge
 
 DEFAULT_DB_DIRNAME = "resume-talent-pool"
 DB_FILENAME = "talent.db"
+IMPORTS_DIRNAME = "imports"
+
+# settings 表键：脱敏显示开关（"1"=开，默认开；"0"=关）。显示层与导出同受约束（plan/04 §6）。
+MASK_SETTING_KEY = "mask_pii"
 
 _SCHEMA = """
 CREATE TABLE IF NOT EXISTS candidates(
@@ -475,3 +483,111 @@ class TalentStore:
             (chosen, _now(), conflict_id))
         self.conn.commit()
         return cur.rowcount > 0
+
+    def resolve_field_conflict(self, conflict_id: int, chosen: str) -> bool:
+        """字段冲突人工采纳：把 chosen 值写入候选人主档并关闭冲突记录。
+
+        chosen 为 option_a/option_b 之一（GUI 面板按钮传入）；写入即生效（显示层
+        下次刷新可见），不删除任何历史简历归档。
+        """
+        row = self.conn.execute("SELECT * FROM merge_conflicts WHERE id=?",
+                                (conflict_id,)).fetchone()
+        if row is None or row["status"] != "pending" or row["field"] == "candidate_merge":
+            return False
+        if chosen not in (row["option_a"], row["option_b"]):
+            return False
+        self.conn.execute(f"UPDATE candidates SET {row['field']}=? WHERE id=?",
+                          (chosen, row["candidate_id"]))
+        self.conn.commit()
+        return self.resolve_conflict(conflict_id, chosen)
+
+    def merge_candidates(self, source_id: int, target_id: int) -> Dict[str, Any]:
+        """candidate_merge 待确认记录的人工确认闭环：把 source 并入 target。
+
+        简历/经历/标签/待确认记录全部迁移到 target；主档字段按最新版本取值
+        （merge.is_newer，与自动合并 _merge_into 同口径）；删除 source 档。
+        返回 {"moved_resumes", "conflicts"}。source 不存在或与 target 相同抛 ValueError。
+        """
+        if source_id == target_id:
+            raise ValueError("source 与 target 为同一候选人")
+        src = self.candidate(source_id)
+        tgt = self.candidate(target_id)
+        if src is None or tgt is None:
+            raise ValueError(f"候选人不存在: {source_id or target_id}")
+
+        src_card = self._candidate_card(source_id)
+        tgt_card = self._candidate_card(target_id)
+        source_newer = merge.is_newer(src_card, tgt_card)
+
+        moved = self.conn.execute(
+            "UPDATE resumes SET candidate_id=? WHERE candidate_id=?",
+            (target_id, source_id)).rowcount
+        self.conn.execute("UPDATE experiences SET candidate_id=? WHERE candidate_id=?",
+                          (target_id, source_id))
+        self.conn.execute(
+            "INSERT OR IGNORE INTO candidate_tags(candidate_id, tag_id)"
+            " SELECT ?, tag_id FROM candidate_tags WHERE candidate_id=?",
+            (target_id, source_id))
+        self.conn.execute("UPDATE merge_conflicts SET candidate_id=? WHERE candidate_id=?",
+                          (target_id, source_id))
+
+        # 字段取值：最新版本赢，历史值回填（与自动合并 pick 语义一致，plan/04 §3.3）
+        for col in _CANDIDATE_COLS:
+            if source_newer:
+                value = merge.merged_scalar(tgt[col], src[col])
+            else:
+                value = tgt[col] if tgt[col] is not None else src[col]
+            self.conn.execute(f"UPDATE candidates SET {col}=? WHERE id=?",
+                              (value, target_id))
+        py = sorted(matcher.pinyin_keys(self.candidate(target_id)["name"] or ""))
+        self.conn.execute("UPDATE candidates SET name_py=?, latest_resume_id=?,"
+                          " years_of_work=? WHERE id=?",
+                          (" ".join(py),
+                           self.conn.execute(
+                               "SELECT latest_resume_id FROM candidates WHERE id=?",
+                               (target_id,)).fetchone()["latest_resume_id"],
+                           self._recompute_years(target_id), target_id))
+        self.conn.execute("DELETE FROM candidates WHERE id=?", (source_id,))
+        self._rebuild_fts(target_id)
+        self.conn.commit()
+        return {"moved_resumes": moved}
+
+    # -- 设置与隐私 ----------------------------------------------------------
+
+    def get_setting(self, key: str, default: Optional[str] = None) -> Optional[str]:
+        row = self.conn.execute("SELECT value FROM settings WHERE key=?", (key,)).fetchone()
+        return row["value"] if row else default
+
+    def set_setting(self, key: str, value: str) -> None:
+        self.conn.execute(
+            "INSERT INTO settings(key, value) VALUES(?, ?)"
+            " ON CONFLICT(key) DO UPDATE SET value=excluded.value",
+            (key, str(value)))
+        self.conn.commit()
+
+    def masking_enabled(self) -> bool:
+        """脱敏开关（settings.mask_pii，缺省=开，plan/04 §6）。"""
+        return self.get_setting(MASK_SETTING_KEY, "1") != "0"
+
+    def set_masking_enabled(self, enabled: bool) -> None:
+        self.set_setting(MASK_SETTING_KEY, "1" if enabled else "0")
+
+    # -- JD 初筛输入 ---------------------------------------------------------
+
+    def screening_cards(self) -> List[Dict[str, Any]]:
+        """全部候选人的初筛输入：[{"candidate_id", "card"}]（id 升序，确定性）。
+
+        参数卡 = 主档字段 + 全部经历 + 技能标签（screening.jd 纯函数通路的输入，
+        与 GUI 初筛页、CLI screen 共用）。
+        """
+        out = []
+        for row in self.conn.execute("SELECT id FROM candidates ORDER BY id"):
+            candidate_id = row["id"]
+            card = self._candidate_card(candidate_id)
+            skills = [r["name"] for r in self.conn.execute(
+                "SELECT t.name FROM tags t JOIN candidate_tags ct ON ct.tag_id=t.id"
+                " WHERE ct.candidate_id=? AND t.kind='skill' ORDER BY t.name",
+                (candidate_id,))]
+            card.skills = [FieldValue(value=s) for s in skills]
+            out.append({"candidate_id": candidate_id, "card": card})
+        return out

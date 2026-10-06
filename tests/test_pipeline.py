@@ -105,6 +105,27 @@ def store_has_candidate(db: str, name: str) -> bool:
         return any(c["name"] == name for c in store.search(""))
 
 
+def test_import_copies_original_to_imports_dir(tmp_path):
+    """M5：导入成功复制原件到 <库目录>/imports/（sha 前 12 位前缀），重复导入不复制。"""
+    from resume_talent_pool.privacy.purge import purge_all
+
+    db = str(tmp_path / "t.db")
+    src = tmp_path / "good.txt"
+    src.write_text("姓名：测试员\n电话：19900000099\n", encoding="utf-8")
+    records = ImportPipeline().run([str(src)], db)
+    copy = records[0]["imported_copy"]
+    assert pathlib.Path(copy).exists()
+    assert pathlib.Path(copy).read_bytes() == src.read_bytes()
+
+    records2 = ImportPipeline().run([str(src)], db)
+    assert records2[0]["status"] == "duplicate"
+    assert "imported_copy" not in records2[0]    # 重复导入不再复制
+
+    with TalentStore(db) as store:
+        report = purge_all(store, str(pathlib.Path(db).parent / "imports"))
+    assert report["files_deleted"] == 1          # 一键清除删除原件副本
+
+
 # -- CLI 子命令 ------------------------------------------------------------------
 
 def test_cli_import_and_search_roundtrip(tmp_path, capsys):

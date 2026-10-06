@@ -9,6 +9,7 @@
 """
 
 import hashlib
+import shutil
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List
 
@@ -21,20 +22,34 @@ def sha256_file(path: str) -> str:
     return digest.hexdigest()
 
 
-class ImportPipeline:
-    """批量导入状态机：逐文件解析→归一→入库，失败隔离，返回逐文件结果记录。"""
+def imports_dir_for(db_path: str) -> Path:
+    """导入原件副本目录：<库文件目录>/imports/（plan/03 §5 存储层，purge 真删除对象）。"""
+    return Path(db_path).parent / "imports"
 
-    def run(self, files: Iterable[str], db_path: str) -> List[Dict[str, Any]]:
+
+class ImportPipeline:
+    """批量导入状态机：逐文件解析→归一→入库，失败隔离，返回逐文件结果记录。
+
+    导入成功的文件复制一份原件到 <库目录>/imports/（sha 前 12 位前缀防重名，
+    plan/03 §5）；重复导入（sha 已存在）不再复制，失败文件不复制。
+    """
+
+    def run(self, files: Iterable[str], db_path: str,
+            on_result: Callable[[Dict[str, Any]], None] = None) -> List[Dict[str, Any]]:
         from .parsing.router import parse_resume  # 惰性：parse extras（D-022）
         from .storage.db import TalentStore
 
         records: List[Dict[str, Any]] = []
         with TalentStore(db_path) as store:
             for path in files:
-                records.append(self._import_one(str(path), store, parse_resume))
+                record = self._import_one(str(path), store, parse_resume, db_path)
+                records.append(record)
+                if on_result:
+                    on_result(record)   # GUI 导入页逐文件进度回调（后台线程 emit）
         return records
 
-    def _import_one(self, path: str, store, parse_resume: Callable) -> Dict[str, Any]:
+    def _import_one(self, path: str, store, parse_resume: Callable,
+                    db_path: str) -> Dict[str, Any]:
         try:
             digest = sha256_file(path)
             if store.has_sha256(digest):
@@ -47,9 +62,18 @@ class ImportPipeline:
             if not card.file_sha256:
                 card.file_sha256 = digest
             result = store.add_parsed_card(card)
+            result["imported_copy"] = self._copy_original(path, digest, db_path)
             return {"file": path, **result}
         except Exception as exc:  # 失败隔离：单文件异常不中断批次
             return {"file": path, "status": "failed", "error": f"{type(exc).__name__}: {exc}"}
+
+    def _copy_original(self, path: str, sha: str, db_path: str) -> str:
+        imports_dir = imports_dir_for(db_path)
+        imports_dir.mkdir(parents=True, exist_ok=True)
+        dst = imports_dir / f"{sha[:12]}_{Path(path).name}"
+        if not dst.exists():
+            shutil.copyfile(path, dst)
+        return str(dst)
 
 
 def collect_resume_files(root: str) -> List[str]:

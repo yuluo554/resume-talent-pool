@@ -198,3 +198,24 @@ def test_default_db_path_uses_appdata(monkeypatch, tmp_path):
     assert default_db_path() == tmp_path / "resume-talent-pool" / "talent.db"
     monkeypatch.delenv("APPDATA")
     assert default_db_path().parent.name == ".resume-talent-pool"
+
+
+# -- settings 与脱敏开关（M5，plan/04 §6）------------------------------------------
+
+def test_masking_enabled_defaults_on(store):
+    assert store.get_setting("mask_pii") is None
+    assert store.masking_enabled() is True       # 默认开
+
+
+def test_masking_toggle_persists(store):
+    store.set_masking_enabled(False)
+    assert store.masking_enabled() is False
+    store.set_masking_enabled(True)
+    assert store.masking_enabled() is True
+
+
+def test_setting_roundtrip_arbitrary_key(store):
+    store.set_setting("ui_lang", "zh-CN")
+    assert store.get_setting("ui_lang") == "zh-CN"
+    store.set_setting("ui_lang", "en")           # upsert 覆盖
+    assert store.get_setting("ui_lang") == "en"

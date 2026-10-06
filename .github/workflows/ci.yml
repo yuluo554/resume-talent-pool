@@ -22,8 +22,11 @@ jobs:
       - name: Install
         run: |
           python -m pip install -U pip
-          # 依赖纪律：测试期真实 import 生成器（reportlab/python-docx）与抽取校验
-          # （pdfplumber）→ dev 之外显式安装 gen+parse，禁止测试靠 importorskip 静默跳过
-          pip install -e ".[dev,parse,gen]"
+          # 依赖纪律：测试期真实 import 生成器（reportlab/python-docx）、抽取校验
+          # （pdfplumber）与 GUI 真实窗口测试（PySide6）→ 显式安装四组 extras，
+          # 禁止测试靠 importorskip 静默少跑（对照收集数，M5 起含 gui）
+          pip install -e ".[dev,parse,gen,gui]"
       - name: Test
+        env:
+          QT_QPA_PLATFORM: offscreen   # 无显示环境跑 GUI 真实窗口测试（test_gui 内亦兜底设置）
         run: pytest

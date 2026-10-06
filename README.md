@@ -1,6 +1,6 @@
 # resume-talent-pool
 
-> 🚧 项目进行中：v0.1.0（M0 骨架 ✅ / M1 合成数据先行 ✅ / M2 解析层 ✅ / M3 归一与人才库 ✅ / M4 内置基准 ✅），功能随里程碑点亮（[计划总览](plan/00-README总览.md)）。
+> 🚧 项目进行中：v0.1.0（M0 骨架 ✅ / M1 合成数据先行 ✅ / M2 解析层 ✅ / M3 归一与人才库 ✅ / M4 内置基准 ✅ / **M5 桌面交付 ✅**），功能随里程碑点亮（[计划总览](plan/00-README总览.md)）。
 
 **简历解析与人才库管理桌面应用**（Windows，本地优先）：简历批量导入解析 → 本地人才库管理与检索 → 同一候选人多版本简历识别与合并 → JD 硬条件初筛 → 导出。全流程本地运行、零网络上传，把《个人信息保护法》（PIPL，2021-11-01 施行）的合规要求做成可演示的产品功能（默认脱敏显示、一键清除、合规说明页）。
 
@@ -13,11 +13,11 @@
 | 批量导入解析（PDF/docx/txt → 候选人参数卡：字段+置信度+证据） | ✅ M2 |
 | 本地人才库：SQLite + FTS5 全文检索、多维筛选、标签体系 | ✅ M3（CLI `import`/`search` 已点亮） |
 | 同一候选人识别与合并（精确键+同音+经历重叠评分，冲突待人工确认） | ✅ M3（M4 全量基准收口，误合并率 0） |
-| 时间线视图：多版本简历经历演变 | ⬜ M5 |
-| JD 硬条件初筛：学历/年限/必备技能/排除项 → 命中矩阵+匹配分（纯规则离线） | ⬜ M5（随 GUI 初筛页一起交付） |
-| 隐私合规：默认脱敏显示、一键清除、PIPL 合规页 | ⬜ M5 |
+| 时间线视图：多版本简历经历演变（自绘色带 + 版本切换 + 冲突确认面板） | ✅ M5 |
+| JD 硬条件初筛：学历/年限/必备技能/排除项 → 三态命中矩阵+匹配分排序+CSV 导出（纯规则离线；CLI `screen` 与 GUI 初筛页共用同一纯函数） | ✅ M5 |
+| 隐私合规：默认脱敏显示（settings 开关，显示/导出同约束）、一键清除（确认词二次确认，真删除+VACUUM+删原件）、PIPL 合规页（启动首页） | ✅ M5 |
 | 内置评测基准：合成简历生成器（固定 seed 带真值）+ 解析/归一指标表 | ✅ M1–M4（`bench gen`/`bench parse`/`bench match`） |
-| PySide6 桌面应用 + PyInstaller 打包 exe | ⬜ M5 |
+| PySide6 桌面应用（导入/人才库/详情/初筛/合规五页）+ PyInstaller 打包 exe（onedir+zip） | ✅ M5（exe 冒烟通过） |
 
 ## 架构
 
@@ -42,8 +42,8 @@ pytest
 resume-talent-pool --version
 ```
 
-- Python ≥ 3.8（开发机 3.8.8）；GUI 需 `pip install -e ".[gui]"`（M5 点亮）。
-- 依赖分组见 `pyproject.toml`：`parse`/`gen`/`gui`/`report`/`llm`/`dev`。
+- Python ≥ 3.8（开发机 3.8.8）；桌面应用需 GUI extras：`pip install -e ".[dev,parse,gui]"`，运行 `py -m resume_talent_pool.cli gui`。
+- 依赖分组见 `pyproject.toml`：`parse`/`gen`/`gui`/`report`/`llm`/`dev`/`pkg`（PyInstaller）。
 
 ## 内置评测基准
 
@@ -94,6 +94,44 @@ py -m resume_talent_pool.cli bench match --data output   # 归一基准（门槛
   缺失且经历追加演进），产品语义即"不自动合并、进人工队列"，不计为错误；9 对待确认
   对全部同类、零跨组。
 
+## CLI 速查（screen / purge）
+
+```bash
+# JD 初筛：三态命中矩阵（✓满足 ✗不满足 ?待人工确认）+ 匹配分排序，可导出 CSV
+py -m resume_talent_pool.cli import data/samples/resumes --db talent.db
+py -m resume_talent_pool.cli screen --jd jd.json --db talent.db --export 初筛结果.csv
+
+# 一键清除（真删除，需输入确认词「清除全部数据」；保留 JD 条件与脱敏设置）
+py -m resume_talent_pool.cli purge --db talent.db
+```
+
+JD 条件 JSON（字段均可缺省 = 不设门槛）：`{"degree_min": "本科", "years": {"min": 3, "max": 5}, "must_have_skills": ["Java", "MySQL"], "exclude_keywords": ["培训机构"]}`
+
+## 桌面应用（PySide6）
+
+![演示 GIF](docs/demo.gif)
+
+五页面：**导入**（拖拽/文件夹，后台线程，失败隔离）→ **人才库**（FTS 全文 + 筛选）→
+**候选人详情**（多版本切换 + 时间线自绘 + 冲突确认面板）→ **JD 初筛**（条件表单 + 命中矩阵 +
+导出）→ **合规与设置**（PIPL 白话说明、存储位置、脱敏开关、一键清除）。启动首页即合规声明，
+状态栏常驻脱敏指示；全流程零网络（断网可演示）。GIF 由 [scripts/make_demo_gif.py](scripts/make_demo_gif.py)
+驱动真实界面抓帧生成（可复现）。
+
+## 打包（Windows exe）
+
+```bash
+py -m pip install -e ".[pkg]"
+py -X utf8 -m PyInstaller --noconfirm --clean resume-talent-pool.spec   # onedir（D-013）
+# 产物 dist/resume-talent-pool/，可 zip 附 Release；无 Python 环境冒烟：
+distesume-talent-poolesume-talent-pool.exe --smoke --db %TEMP%\smoke.db
+# 退出码 0 且 %TEMP%\smoke.db.smoke-report.txt 含 "smoke ok" 即通过
+```
+
+- **杀毒软件误报**：PyInstaller 打包的 exe 属常见误报对象（无签名 + 打包器特征）。处理：
+  加入白名单/信任区，或用 `py -m resume_talent_pool.cli gui` 直接从源码运行；发布 Release 附
+  的 zip 保持原样分发，不做加壳规避（亦不建议关闭杀软）。
+- onedir 而非 onefile（D-013）：启动快、误报率低；dist 约 187MB（含 PySide6/pdf 解析链），zip 约 76MB。
+
 ## 目录结构
 
 ```
@@ -101,6 +139,9 @@ src/resume_talent_pool/   核心包（parsing/normalize/screening/storage/privac
 tests/                    离线测试
 plan/                     项目计划与交接快照（00–06、HANDOFF）
 data/                     数据台账、知识库（PIPL 条文出处）、生成器参数池、入仓样例
+docs/                     演示素材（demo.gif）
+scripts/                  可复现工具（演示 GIF 生成）
+packaging/ + *.spec       PyInstaller 打包入口与配置
 ```
 
 ## 边界与限制
