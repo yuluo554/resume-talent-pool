@@ -105,10 +105,23 @@
 - 记录：推送前审计 tracked OK；tag push 未配触发（ci.yml 仅 push/pr/workflow_dispatch）——打 tag 不产生第二轮 run，如实记录
 
 ## 5. Release 产物
-- [ ] exe 重建 + `resume-talent-pool-0.1.0-win64.zip` sha256 留档
-- [ ] tag v0.1.0 + release（exe zip + docs/demo.gif + 技术报告 docx）——**经用户确认后执行**
-- 拍板留档：待用户确认后填写
-- 发布基线核对：`git diff <发布基线>..HEAD -- src/` 为空 = 产物与源码同运行时基线
+- [x] exe 重建（PyInstaller 5.13.2 onedir）+ 冒烟 `smoke ok: files=3 candidates=2 matrix=2 pages=5 purge_candidates=2`
+- [x] `dist/resume-talent-pool-0.1.0-win64.zip`（80.0 MB）sha256 = `64f250b46ed078b626abc76e0c49c6acd7e274d726c2402ef26cc023b1fc374c`
+- [x] tag v0.1.0 + release（exe zip + docs/demo.gif + docs/技术报告.docx）——**经用户确认后执行（2026-10-06）**
+- **拍板留档（2026-10-06 用户确认）**：① 发布确认——tag v0.1.0 + GitHub Release 附三产物，**同意**；
+  ② 仓库 topics——推荐组（resume-parser / talent-pool / entity-resolution / pyside6 / pipl /
+  recruiting / offline-first / windows），**同意**；③ 方法论 skill 回写（M5/M6 实测四条），**同意**。
+- 发布基线核对（防"扫的是旧产物"）：`git diff <M5 提交>..HEAD -- src/ packaging/ *.spec` **为空**
+  = 产物与发布源码同运行时基线；本轮仅文档/依赖 pin/脚本改动，核心域未动。
+- 产物本体扫描（skill 阶段 7 第 5 步，**实测 450 文件字节级**）：本项目泄漏面 **0**——
+  本机用户名、本机路径、源码路径、GitHub id、旧邮箱、handle 全部无命中；唯一形似命中是
+  某上游 GUI 运行时 DLL 内**厂商名字符串表**的子串（非用户名），字节路出现的用户目录路径
+  均为**上游官方构建机**（Qt 官方构建机与 Rust CI 构建机）固有内容，非本项目泄漏面
+  （与"上游 SBOM 公共邮箱不该刷屏"同理）——按留档纪律不复述路径字面值。
+  教训：**留档复述路径字面值会被自家审计器判硬门**（CI 守门测试在推送前抓到），
+  写"上游构建机路径"这类描述式表述即可。
+- 发布基线核对旁证：`git diff <M5 提交>..HEAD -- src/ packaging/ *.spec` 为空 = 冻结产物与
+  发布源码同运行时基线（防"扫的是旧产物"质疑）。
 
 ## 6. 终验结果（B-001 改写后，2026-10-06 实测回填）
 

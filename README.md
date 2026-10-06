@@ -2,13 +2,13 @@
 
 [![CI](https://github.com/yuluo554/resume-talent-pool/actions/workflows/ci.yml/badge.svg)](https://github.com/yuluo554/resume-talent-pool/actions/workflows/ci.yml)
 
-> 🚧 项目进行中：v0.1.0（M0 骨架 ✅ / M1 合成数据先行 ✅ / M2 解析层 ✅ / M3 归一与人才库 ✅ / M4 内置基准 ✅ / **M5 桌面交付 ✅**），功能随里程碑点亮（[计划总览](plan/00-README总览.md)）。
+> ✅ **v0.1.0 已发布**：[GitHub Release](https://github.com/yuluo554/resume-talent-pool/releases/tag/v0.1.0)（附 Windows exe zip + 演示 GIF + 技术报告）。M0 骨架 / M1 合成数据先行 / M2 解析层 / M3 归一与人才库 / M4 内置基准 / M5 桌面交付 / M6 脱敏发布，七个里程碑全部完成（[计划总览](plan/00-README总览.md)）。
 
 **简历解析与人才库管理桌面应用**（Windows，本地优先）：简历批量导入解析 → 本地人才库管理与检索 → 同一候选人多版本简历识别与合并 → JD 硬条件初筛 → 导出。全流程本地运行、零网络上传，把《个人信息保护法》（PIPL，2021-11-01 施行）的合规要求做成可演示的产品功能（默认脱敏显示、一键清除、合规说明页）。
 
 > 免责声明：本工具仅辅助简历整理与筛选定位，不构成录用决策建议。
 
-## 特性（规划，随里程碑点亮）
+## 特性
 
 | 特性 | 状态 |
 |---|---|
