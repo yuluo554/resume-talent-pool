@@ -51,11 +51,27 @@
 - 改写：`git filter-branch -f --env-filter（作者+提交者邮箱→noreply）--tree-filter（py -X utf8 ../m6_tree_rewrite.py）-- --all`；
 - 清理：`rm -rf .git/refs/original && git reflog expire --expire=now --all && git gc --prune=now --aggressive`；
 - 终验（阳性对照先行 + 固定字面值，只扫将推送的 refs/heads/main 与 --all 元数据）：
-  - [ ] 阳性对照：改写前 bundle 中 grep 固定字面值命中 >0（证明扫描管道有效）
-  - [ ] 元数据：`git log --all --format='%ae|%ce' | sort -u` 仅 noreply
-  - [ ] 内容：审计 `--mode history`（补丁文本+二进制 blob+文件名+元数据+提交信息）全 0
-  - [ ] 文件名：`git rev-list --all --objects` 路径扫描全 0
-  - （结果见 §6）
+  - [x] 阳性对照：改写前 `git log --all -p | grep -c <固定字面值>` = 11（>0，管道有效）
+  - [x] 元数据：`git log --all --format='%ae|%ce' | sort -u` 仅 noreply（10/10 提交）
+  - [x] 内容：审计 `--mode history`（补丁文本+二进制 blob+文件名+元数据+提交信息）**DESSENSITIZE_AUDIT_OK**
+  - [x] 三扫固定字面值：补丁文本 0 / 提交信息+元数据 0 / 文件名 0；阳性对照 72
+  - （详见 §6）
+
+## 1.1 改写执行实录（如实留痕，含事故）
+
+- 第 1 次 filter-branch（env+tree 合一）成功，但发现**根提交树未洗**（其余 9 提交已洗）。
+- 根因：根提交树无 `.gitattributes`（M0 才加入），filter-branch 检出受本机
+  `core.autocrlf=true` 影响写出 **CRLF**，tree-filter 脚本 `$` 锚点（仅匹配 `\n` 前）
+  在行尾 `\r` 处失配 → 脚本 0 命中。M0+ 提交因属性文件在树内、检出为 LF 故正常。
+- 修复：重写脚本正则改 `[^\r\n]*\r?$` 容忍行尾 `\r`。
+- **第 2 次重跑被 `| head -6` 提前关管道 SIGPIPE 杀死于写 ref 中途**（`refs/heads/main`
+  写成全零坏 ref）——方法论「关键命令单独跑、检查真实退出码」实录；恢复：fsck 定位
+  dangling 好提交（第 2 次改写产物 tip）→ 删坏 ref 文件 → `git update-ref` 重建 main
+  → fsck 0 错误。
+- 第 3 次重跑：输出重定向文件（不用管道），exit 0，`Ref 'refs/heads/main' was rewritten`；
+  清理 refs/original/reflog/gc 后终验全 0（见 §6）。
+- 仓外备份 `../resume-talent-pool-pre-rewrite.bundle`（改写前全历史，含旧邮箱元数据——
+  事故恢复的事实依据，发布后保留至收尾确认再处置）。
 
 ## 2. 干净环境验证（新 clone + 新 venv）
 - [ ] 待执行（B-001 改写后的 clone 才有效——改写前 clone 残留旧历史对象，用完即删）
@@ -75,8 +91,19 @@
 - 拍板留档：待用户确认后填写
 - 发布基线核对：`git diff <发布基线>..HEAD -- src/` 为空 = 产物与源码同运行时基线
 
-## 6. 终验结果（改写后回填）
-- （待回填：三扫输出计数、DESSENSITIZE_AUDIT_OK 标记行）
+## 6. 终验结果（B-001 改写后，2026-10-06 实测回填）
+
+```
+阳性对照（resume-talent-pool 固定词）git log --all -p 命中   = 72（管道有效）
+扫1  旧邮箱固定字面值（本地部分+@qq域）git log --all -p      = 0
+扫2  旧邮箱固定字面值 提交信息+作者/提交者元数据             = 0
+扫3  旧邮箱固定字面值 rev-list --objects 文件名              = 0
+审计 --mode history   （补丁+blob+文件名+元数据+提交信息）   = DESSENSITIZE_AUDIT_OK
+审计 --mode messages  （提交信息+元数据）                    = DESSENSITIZE_AUDIT_OK
+审计 --mode tracked   （工作树）                             = DESSENSITIZE_AUDIT_OK
+元数据 git log --all --format='%ae|%ce' | sort -u            = 仅 <id>+yuluo554@users.noreply.github.com
+提交数 = 10；fsck 错误 = 0；工作树 = clean
+```
 
 ## 7. 收尾固化
 - [ ] topics / About / README 状态行翻转 + CI 徽章
