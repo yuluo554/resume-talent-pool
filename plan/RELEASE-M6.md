@@ -73,9 +73,24 @@
 - 仓外备份 `../resume-talent-pool-pre-rewrite.bundle`（改写前全历史，含旧邮箱元数据——
   事故恢复的事实依据，发布后保留至收尾确认再处置）。
 
-## 2. 干净环境验证（新 clone + 新 venv）
-- [ ] 待执行（B-001 改写后的 clone 才有效——改写前 clone 残留旧历史对象，用完即删）
-- 记录：安装 → 收集数对照（M5 基线 150 + 审计守门 2 = 152）→ bench 三连 → CLI 全链路 → gui
+## 2. 干净环境验证（新 clone + 新 venv，2026-10-06 实测回填）
+
+- 环境：`git clone` 改写后仓库（全历史 noreply）至仓外目录 + `py -m venv`（py3.8.8，自带 pip 20.2.3）。
+- **抓到两个真 bug（发布门核心价值实录）并已修复回归**：
+  1. README 快速开始对 venv 不安全——`py` 启动器无视 venv（升级的是系统 pip），且 3.8 venv
+     自带 pip 20.2.3 装不了 pyproject-only editable 项目 → README 改为 `py -m venv .venv` +
+     激活 + venv 内 `python -m pip install -U pip` 前置；
+  2. **gen 组 reportlab 无上限 pin**：干净 venv 解析到 4.4.3，其在 py3.8 调
+     `hashlib.md5(usedforsecurity=)`（py3.9+ 参数）直接 TypeError（开发机 reportlab 3.6.13
+     从未暴露）→ pin `reportlab>=3.6,<4`（3.6.13 无该调用且官方支持 py3.11）。
+- 验证结果（pip 走清华镜像为本机网络适配，README 未改）：
+  - [x] README 逐条：venv 创建→升级 pip→editable 安装（pdfplumber 0.11.5/python-docx 1.1.2/pypinyin 0.55.0/reportlab 3.6.13 均在 pin 内）→pytest→`resume-talent-pool --version`（0.1.0）
+  - [x] pytest 收集数 **152 = dev 一致**（M5 基线 150 + 审计守门 2）；干净 venv 144 过 + 8 skip
+        （7×requires_qt 未装 PySide6 + 1×降级路径在缺依赖态执行）——差异逐项归因到声明式跳过；
+        全量单进程在干净 venv 触发随机崩溃家族 → 分 5 批跑全绿（33/35/38/38+8s）
+  - [x] bench 三连：gen 178 份 + parse 宏 F1=1.0 + match P=1.0/R=0.9583/误合并 0/待确认 9（同类 9/跨组 0）——与 M4/M5 回归锚一致
+  - [x] CLI 全链路：import（merged 9/new 11）→ search（FTS 命中、脱敏默认开）→ screen（三态矩阵+匹配分）→ purge（确认词非交互拦截正确；stdin 确认后真删除 candidates_fts 11 行 + imports/ 原件 20 个 326252 字节）
+  - [x] gui：追加安装 `.[gui]`（PySide6 6.6.3.1）→ `gui --smoke` 全流程 `smoke ok: files=3 candidates=2 matrix=2 pages=5 purge_candidates=2`（offscreen 无字体告警为已知现象，报告文件正常）
 
 ## 3. 技术报告
 - [ ] docs/技术报告.md 定稿 + docx 程序化生成（生成器脚本入仓，禁止手改产物）
