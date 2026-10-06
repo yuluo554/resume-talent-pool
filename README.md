@@ -123,7 +123,7 @@ JD 条件 JSON（字段均可缺省 = 不设门槛）：`{"degree_min": "本科"
 py -m pip install -e ".[pkg]"
 py -X utf8 -m PyInstaller --noconfirm --clean resume-talent-pool.spec   # onedir（D-013）
 # 产物 dist/resume-talent-pool/，可 zip 附 Release；无 Python 环境冒烟：
-distesume-talent-poolesume-talent-pool.exe --smoke --db %TEMP%\smoke.db
+dist\resume-talent-pool\resume-talent-pool.exe --smoke --db %TEMP%\smoke.db
 # 退出码 0 且 %TEMP%\smoke.db.smoke-report.txt 含 "smoke ok" 即通过
 ```
 

@@ -66,7 +66,7 @@
    + 技术报告 docx——report 组已有依赖，报告框架见 plan/01 §提交材料）；tag/release 前
    经用户确认（系列纪律）。
 7. **收尾固化**：topics、About、README badge/徽标（可选）、方法论沉淀（系列冲刺方法论
-   回写 M5/M6 经验：offscreen 字体坑、PyInstaller py3.8 版本坑、模态框挂测试坑）。
+   skill 回写 M5/M6 经验：offscreen 字体坑、PyInstaller py3.8 版本坑、模态框挂测试坑）。
 
 ## 既定口径清单（M5 后仍然有效，全量见 HANDOFF-M5 与 plan/04-06）
 
