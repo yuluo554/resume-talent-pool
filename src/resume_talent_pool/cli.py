@@ -1,9 +1,10 @@
 """命令行入口。
 
 ``--version`` 与 6 个子命令；M1 点亮 ``bench gen``、M2 点亮 ``bench parse``、
-M3 点亮 ``import``/``search``（screen 按计划详设属 M3，但 DoD 未收口，推迟见
-HANDOFF-M4），其余占位（友好提示 + 退出码 2，不崩溃）：评测子命令惰性导入重型依赖，
-缺失时给出安装指引（核心 CLI 本体零第三方依赖）。
+M3 点亮 ``import``/``search``、M4 点亮 ``bench match``（screen 按计划详设属 M3，
+但 DoD 未收口，随 M5 GUI 初筛页一起做，见 HANDOFF-M4/M5），其余占位（友好提示 +
+退出码 2，不崩溃）：评测子命令惰性导入重型依赖，缺失时给出安装指引（核心 CLI
+本体零第三方依赖）。
 """
 
 import argparse
@@ -11,7 +12,7 @@ import argparse
 from . import __version__
 
 _MILESTONES = {
-    "screen": "M4",
+    "screen": "M5",  # M4 未收口（DoD 不含），随 M5 GUI 初筛页一起做（HANDOFF-M4/M5）
     "purge": "M5",
     "gui": "M5",
 }
@@ -41,10 +42,15 @@ def build_parser() -> argparse.ArgumentParser:
     gen.add_argument("--seed", type=int, default=20261005, help="随机种子（默认 20261005）")
     gen.add_argument("--persons", type=int, default=100, help="虚拟人数（默认 100）")
     gen.add_argument("--out", default="output", help="输出目录（默认 output/，不入仓）")
-    parse = bench_sub.add_parser("parse", help="解析基准：字段级 P/R/F1（M2 起可用，M4 收口全量门槛）")
+    parse = bench_sub.add_parser("parse", help="解析基准：字段级 P/R/F1（M2 起可用）")
     parse.add_argument("--data", default="output", help="数据目录（含 truth.json + resumes/，默认 output/；data/samples 可直接用）")
-    parse.add_argument("--min-f1", type=float, default=0.9, help="宏平均 F1 门槛（默认 0.9，M4 全量收口为 0.95）")
-    bench_sub.add_parser("match", help="归一基准：同一人识别 P/R 与误合并率（M4）")
+    parse.add_argument("--min-f1", type=float, default=0.95, help="宏平均 F1 门槛（D-024 定档 0.95）")
+    match = bench_sub.add_parser("match", help="归一基准：同一人识别聚类对账 P/R 与误合并率（M4 点亮）")
+    match.add_argument("--data", default="output", help="数据目录（含 truth.json + resumes/，默认 output/；data/samples 可直接用）")
+    match.add_argument("--min-pr", dest="min_pr", type=float, default=0.95,
+                       help="精确率与召回率门槛（D-024 定档 0.95）")
+    match.add_argument("--max-false-merge", dest="max_false_merge", type=float, default=0.0,
+                       help="误合并率上限（硬门槛，默认 0）")
     subparsers.add_parser("purge", help="一键清除全部个人信息（M5）")
     subparsers.add_parser("gui", help="启动 PySide6 桌面应用（M5）")
     return parser
@@ -52,7 +58,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 def _cmd_bench(args) -> int:
     if args.bench_command is None:
-        print("用法：bench gen [--seed N] [--persons N] [--out DIR]；bench parse/match 于 M4 提供")
+        print("用法：bench gen [--seed N] [--persons N] [--out DIR]；"
+              "bench parse --data DIR；bench match --data DIR")
         return 2
     if args.bench_command == "gen":
         try:
@@ -83,6 +90,26 @@ def _cmd_bench(args) -> int:
         print(f"门槛判定：宏平均 F1 {result['macro_f1']:.4f} {'>=' if result['macro_f1'] >= args.min_f1 else '<'} "
               f"{args.min_f1}（{verdict}）")
         return 0 if result["macro_f1"] >= args.min_f1 else 1
+    if args.bench_command == "match":
+        try:
+            from .evaluation.benchmark import format_match_report, run_match_benchmark
+        except ImportError:
+            print("缺少解析依赖（pdfplumber/python-docx）。请安装：pip install resume-talent-pool[parse]")
+            return 2
+        try:
+            result = run_match_benchmark(args.data)
+        except FileNotFoundError as exc:
+            print(f"{exc}")
+            return 2
+        print(format_match_report(result))
+        pr_ok = result["precision"] >= args.min_pr and result["recall"] >= args.min_pr
+        fm_ok = result["false_merge_rate"] <= args.max_false_merge
+        verdict = "达标" if pr_ok and fm_ok else "未达标"
+        print(f"门槛判定：P/R {result['precision']:.4f}/{result['recall']:.4f} "
+              f"{'>=' if pr_ok else '<'} {args.min_pr}，"
+              f"误合并率 {result['false_merge_rate']:.4f} {'<=' if fm_ok else '>'} "
+              f"{args.max_false_merge}（{verdict}）")
+        return 0 if pr_ok and fm_ok else 1
     print(f"尚未实现（里程碑 M4）：bench {args.bench_command}")
     return 2
 

@@ -295,3 +295,20 @@ def test_cli_bench_gen(tmp_path, capsys):
     assert truth["seed"] == 7
     assert len(truth["persons"]) == 3
     assert (out / "resumes").is_dir()
+
+
+# --------------------------------------------------------------------------- #
+# M4 内置基准：全量 match 门槛（复用 run100 会话夹具，dataset 与 output/ 同 seed 逐字节一致）
+# --------------------------------------------------------------------------- #
+
+def test_match_benchmark_full_set_gate(run100):
+    """M4 DoD（D-024 定档）：全量 100 组聚类对账 P/R ≥ 0.95 且误合并率 = 0（硬）。"""
+    from resume_talent_pool.evaluation.benchmark import run_match_benchmark
+
+    summary, truth, _ = run100
+    result = run_match_benchmark(str(Path(summary["truth_path"]).parent))
+    assert result["files"] == summary["files"] == 178
+    assert result["truth_groups"] == len(truth["relations"]["same_person_groups"]) == 100
+    assert result["false_merge_rate"] == 0.0          # 硬门槛：零跨组合并
+    assert result["precision"] >= 0.95 and result["recall"] >= 0.95
+    assert not result["false_merges"]
