@@ -33,16 +33,18 @@ flowchart LR
 
 详细设计见 [plan/03-架构与技术选型.md](plan/03-架构与技术选型.md)、[plan/04-模块详设.md](plan/04-模块详设.md)。
 
-## 快速开始（开发态）
+## 快速开始
 
 ```bash
-py -m pip install -U pip
+py -m venv .venv
+.venv\Scripts\activate                 # Git Bash: source .venv/Scripts/activate
+python -m pip install -U pip           # 3.8 venv 自带老 pip 装不了 pyproject-only editable 项目，必须先升
 pip install -e ".[dev,parse,gen]"
 pytest
 resume-talent-pool --version
 ```
 
-- Python ≥ 3.8（开发机 3.8.8）；桌面应用需 GUI extras：`pip install -e ".[dev,parse,gui]"`，运行 `py -m resume_talent_pool.cli gui`。
+- Python ≥ 3.8（开发机 3.8.8）；桌面应用需 GUI extras：`pip install -e ".[dev,parse,gui]"`，运行 `py -m resume_talent_pool.cli gui`（未装 PySide6 时 GUI 真实窗口测试自动 skip，收集数不变）。
 - 依赖分组见 `pyproject.toml`：`parse`/`gen`/`gui`/`report`/`llm`/`dev`/`pkg`（PyInstaller）。
 
 ## 内置评测基准
