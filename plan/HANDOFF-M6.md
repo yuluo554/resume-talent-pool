@@ -1,8 +1,29 @@
-# HANDOFF → M6（脱敏发布）
+# HANDOFF → M6（脱敏发布）· 终版收官
+
+> **状态：项目完结收官（2026-10-06）**。v0.1.0 已发布：仓库 https://github.com/yuluo554/resume-talent-pool
+> ，Release https://github.com/yuluo554/resume-talent-pool/releases/tag/v0.1.0（exe zip + demo.gif +
+> technical-report.docx）。M0–M6 七个里程碑全部完成，无缓议项，无下一棒（无 HANDOFF-M7）。
+> 本文件由 M6 会话执行完毕后就地收束（消费记录见下）。
 
 > 用途：新对话续接 M6。启动方式：`/goal` 指向本文件，即：
 > 读取 `plan/HANDOFF-M6.md` 继续完成任务。必读：plan/00–06（本快照只记增量与口径）。
 > 上一棒快照 HANDOFF-M5.md 已消费完毕，存档备查。
+
+## M6 执行记录（2026-10-06，本文件对应里程碑已闭环）
+
+- **B-001 邮箱改写**：env-filter + tree-filter 合一全历史改写 noreply（含根提交 CRLF 失配修复与
+  SIGPIPE 事故恢复，实录 plan/RELEASE-M6 §1.1）；终验三扫全 0 + 阳性对照 72；GitHub 全新 clone
+  复核三扫 0（阳性对照 90）。
+- **脱敏四步**：审计器 `scripts/desensitize_audit.py` 固化入仓（tracked/history/messages/selftest
+  四模式 + 二进制白名单 sha256 硬门 + 3 守门测试随全量跑）；plan/00 系列行掩码（⑥ 未公开）、
+  方法论名泛化；产物本体扫描（dist 450 文件）本项目泄漏面 0。
+- **干净环境验证**：新 clone + 新 venv 逐条跑通，抓回 2 真 bug（README venv 安全化、reportlab
+  pin 加 `<4`）；收集数 **153**（原 150 + 审计守门 2 + 报告守门 1），144 过 + 8 skip 逐项归因。
+- **建仓与 CI**：`gh repo create`（无 `--push`）+ SSH push 一次成；4 push = 4 run；最新四矩阵全绿。
+- **Release**：tag v0.1.0 + Release 三附件（实测大小见 RELEASE-M6 §5）；topics 8 个已回读确认。
+- **技术报告**：docs/技术报告.md 定稿 + docx 程序化生成（三联动：台账+白名单+守门测试）。
+- **方法论回写**：4 条（PySide6 三坑 / PyInstaller py3.8 坑 / 只写下限等于没 pin / filter-branch
+  与审计器自引用坑）已写入 skill。
 
 ## 当前进度（M5 已完成，2026-10-06）
 
@@ -93,14 +114,14 @@
 - 全量生成集 output/ 不入仓；dist/build 不入仓（.gitignore；`*.spec` 已加白名单例外）。
 - 测试分批 ≤50 项（本会话实跑 5 批：34/39/47/18/12）；单批崩溃只重跑该批。
 
-## M6 DoD（逐项可验，做完回写 plan/00/05/06 并收尾）
+## M6 DoD（逐项可验，做完回写 plan/00/05/06 并收尾）—— ✅ 全部完成 2026-10-06
 
-- [ ] B-001 邮箱改写 + 终验三扫全 0（B-002 已闭环、B-003 确认）
-- [ ] 脱敏四步完成，白名单复核记录
-- [ ] 干净环境（新 clone + 新 venv）逐条跑通，收集数 150 一致
-- [ ] GitHub 公开仓库 + CI 四矩阵绿（push 数=run 数）
-- [ ] Release 附 exe zip + demo.gif + 技术报告；tag/release 经用户确认
-- [ ] plan/00/05/06 收尾状态 + 方法论回写
+- [x] B-001 邮箱改写 + 终验三扫全 0（B-002 已闭环、B-003 确认）—— 三扫 0 + 阳性对照 72，RELEASE-M6 §6
+- [x] 脱敏四步完成，白名单复核记录 —— 审计器四模式固化入仓，RELEASE-M6 §1
+- [x] 干净环境（新 clone + 新 venv）逐条跑通，收集数一致 —— 153 一致（含审计/报告守门），§2
+- [x] GitHub 公开仓库 + CI 四矩阵绿（push 数=run 数）—— 4=4，最新两轮全绿，§4
+- [x] Release 附 exe zip + demo.gif + 技术报告；tag/release 经用户确认 —— v0.1.0，§5
+- [x] plan/00/05/06 收尾状态 + 方法论回写 —— D-027 定稿，skill 4 条，§7
 
 ## 关键命令速查
 
