@@ -37,3 +37,14 @@ def test_audit_tracked_clean():
     res = _run_audit("tracked")
     assert res.returncode == 0, res.stdout + res.stderr
     assert OK_MARK in res.stdout
+
+
+def test_report_docx_generated_by_script():
+    """技术报告 docx 是产物：必须带生成器脚本标记（结构守门，md 先定稿再生成）。"""
+    import zipfile
+
+    docx = REPO_ROOT / "docs" / "技术报告.docx"
+    assert docx.is_file(), "docs/技术报告.docx 未生成（跑 scripts/make_report_docx.py）"
+    with zipfile.ZipFile(docx) as zf:
+        core = zf.read("docProps/core.xml").decode("utf-8", "replace")
+    assert "make_report_docx.py" in core, "docx 缺生成器标记——疑似手改产物，请改 md 后重生成"

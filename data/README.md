@@ -24,6 +24,7 @@
 | 全量合成集 `output/`（178 份 + truth.json） | 评测数据集（seed=20261005、100 人） | 本项目生成器（`bench gen --seed 20261005`，不入仓） | MIT（随仓库） | ✅ 2026-10-05（可再生成） |
 | `knowledge/pipl_principles.md` | PIPL 条文要点库 | 国家网信办官网法律全文页（渠道与核对日期见该文件） | 事实性引用（条文原文版权归法律发布机构，引用标注出处） | ✅ 2026-10-05 |
 | reportlab 内置 CID 字体 STSong-Light | 生成 PDF 的中文字体（不随仓库分发，随 reportlab 运行时） | reportlab 附带 CMap 数据 | reportlab BSD；CMap 数据按 Adobe 许可随包分发（台账登记） | ✅ 2026-10-05 |
+| `docs/技术报告.docx` | 技术报告 docx 产物（提交材料，v0.1.0） | 程序化生成：`scripts/make_report_docx.py` 由 `docs/技术报告.md` 生成，禁止手改产物 | MIT（随仓库） | ✅ 2026-10-06（sha256 见 scripts/binary_whitelist.txt，重生成后同步更新） |
 
 ## 合成数据纪律（脱敏审查白名单）
 

@@ -80,7 +80,10 @@ INTRANET_IP_RE = re.compile(
 # zip 内 XML 条目走全部文本检测；其余条目（jpeg 缩略图等）走字节强标记。
 ZIP_TEXT_SUFFIXES = (".xml", ".rels")
 
-HARD_CATEGORIES = ("EMAIL", "PHONE", "IDCARD", "USERPATH", "SECRET", "SISTER", "INTRANET_IP", "EMAIL_META")
+HARD_CATEGORIES = (
+    "EMAIL", "PHONE", "IDCARD", "USERPATH", "SECRET", "SISTER", "INTRANET_IP", "EMAIL_META",
+    "BINARY_UNREGISTERED", "BINARY_HASH_MISMATCH",
+)
 REVIEW_CATEGORIES = ("DRIVEPATH", "PROGDATA")
 
 EXIT_OK, EXIT_HARD, EXIT_USAGE = 0, 1, 2
@@ -167,6 +170,39 @@ def _is_binary(data):
 # NUL 嗅探会把压缩流当文本扫出随机噪声命中（p007 PDF 实测）。
 BINARY_SUFFIXES = {".pdf", ".gif", ".png", ".jpg", ".jpeg", ".ico", ".zip", ".db", ".sqlite", ".exe"}
 
+# 跟踪二进制白名单（sha256 与数据台账联动）：新二进制入仓 = 白名单+台账同步更新，
+# 未登记或哈希不符 = 硬门（系列方法论阶段 7 固化形态）。
+WHITELIST_PATH = Path(__file__).resolve().parent / "binary_whitelist.txt"
+
+
+def load_binary_whitelist():
+    entries = {}
+    if WHITELIST_PATH.is_file():
+        for line in WHITELIST_PATH.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            digest, _, rel = line.partition("  ")
+            entries[rel.strip()] = digest.strip()
+    return entries
+
+
+def check_binary_whitelist(tracked, findings):
+    import hashlib
+
+    whitelist = load_binary_whitelist()
+    for rel in tracked:
+        if Path(rel).suffix.lower() not in BINARY_SUFFIXES:
+            continue
+        f = REPO_ROOT / rel
+        if not f.is_file():
+            continue
+        digest = hashlib.sha256(f.read_bytes()).hexdigest()
+        if rel not in whitelist:
+            findings.setdefault(rel, {})["BINARY_UNREGISTERED"] = 1
+        elif whitelist[rel] != digest:
+            findings.setdefault(rel, {})["BINARY_HASH_MISMATCH"] = 1
+
 
 def mode_tracked():
     tracked = [p for p in _git("ls-files", "-z").split("\x00") if p]
@@ -182,6 +218,7 @@ def mode_tracked():
             scan_bytes(data, findings, rel)
         else:
             scan_text(data.decode("utf-8", "replace"), findings, rel)
+    check_binary_whitelist(tracked, findings)
     return findings
 
 

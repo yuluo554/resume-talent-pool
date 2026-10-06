@@ -141,8 +141,8 @@ src/resume_talent_pool/   核心包（parsing/normalize/screening/storage/privac
 tests/                    离线测试
 plan/                     项目计划与交接快照（00–06、HANDOFF）
 data/                     数据台账、知识库（PIPL 条文出处）、生成器参数池、入仓样例
-docs/                     演示素材（demo.gif）
-scripts/                  可复现工具（演示 GIF 生成）
+docs/                     演示素材（demo.gif）与技术报告（技术报告.md / .docx）
+scripts/                  可复现工具（演示 GIF 生成、脱敏审计、技术报告 docx 生成）
 packaging/ + *.spec       PyInstaller 打包入口与配置
 ```
 
