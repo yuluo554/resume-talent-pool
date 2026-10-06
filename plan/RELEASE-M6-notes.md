@@ -56,7 +56,7 @@ py -m resume_talent_pool.cli bench match --data output
 - `resume-talent-pool-0.1.0-win64.zip`（80.0 MB，onedir，解压即用，无需 Python 环境）
   - sha256 `64f250b46ed078b626abc76e0c49c6acd7e274d726c2402ef26cc023b1fc374c`
 - `demo.gif` —— 五页流程演示（导入 → 检索 → 详情时间线 → 初筛 → 导出 → 清除确认）
-- `技术报告.docx` —— 解析方案 / 实体归一算法 / 合规设计（由 md 程序化生成）
+- `technical-report.docx` —— 技术报告（解析方案 / 实体归一算法 / 合规设计，由 docs/技术报告.md 程序化生成）
 
 ## 已知环境问题
 

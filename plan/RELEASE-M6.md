@@ -108,6 +108,14 @@
 - [x] exe 重建（PyInstaller 5.13.2 onedir）+ 冒烟 `smoke ok: files=3 candidates=2 matrix=2 pages=5 purge_candidates=2`
 - [x] `dist/resume-talent-pool-0.1.0-win64.zip`（80.0 MB）sha256 = `64f250b46ed078b626abc76e0c49c6acd7e274d726c2402ef26cc023b1fc374c`
 - [x] tag v0.1.0 + release（exe zip + docs/demo.gif + docs/技术报告.docx）——**经用户确认后执行（2026-10-06）**
+- **发布结果（2026-10-06）**：
+  - tag：`v0.1.0`（annotated，打在终态提交 `eb4e390`）
+  - release：https://github.com/yuluo554/resume-talent-pool/releases/tag/v0.1.0
+  - 附件（实测大小）：`resume-talent-pool-0.1.0-win64.zip` 80042346 B｜`demo.gif` 884839 B｜
+    `technical-report.docx` 42424 B（gh CLI 对中文附件名会规范化成 `default.docx`——已删改用
+    ASCII 名重传，notes 同步更正；附件名纪律：**Release 附件一律 ASCII 名**）
+  - topics（8 个，`gh api .../topics` 回读确认生效）：entity-resolution / offline-first / pipl /
+    pyside6 / recruiting / resume-parser / talent-pool / windows
 - **拍板留档（2026-10-06 用户确认）**：① 发布确认——tag v0.1.0 + GitHub Release 附三产物，**同意**；
   ② 仓库 topics——推荐组（resume-parser / talent-pool / entity-resolution / pyside6 / pipl /
   recruiting / offline-first / windows），**同意**；③ 方法论 skill 回写（M5/M6 实测四条），**同意**。
@@ -138,6 +146,15 @@
 ```
 
 ## 7. 收尾固化
-- [ ] topics / About / README 状态行翻转 + CI 徽章
-- [ ] plan/00/05/06 状态回写 + 方法论 skill 回写（offscreen 字体坑、PyInstaller py3.8 坑、模态框挂测试坑）
-- [ ] 发布后复核：GitHub 全新 clone → 历史三扫 + 全量测试
+- [x] topics（8 个，已回读确认）/ README 状态行翻转（v0.1.0 已发布 + Release 链接 + CI 徽章）
+- [x] plan/00/05/06 状态回写（M6 ✅，决策表收官冻结，B-001~003 全闭环，无缓议项）
+- [x] 方法论 skill 回写（4 条：PySide6 三坑 / PyInstaller py3.8 坑 / 重依赖只写下限等于没 pin /
+      filter-branch SIGPIPE 与 CRLF 失配 / 审计器自引用三坑与误报校准）
+- [x] 发布后复核：GitHub 全新 clone（`eb4e390`，18 提交全 noreply、tag v0.1.0 在）
+      → 历史三扫全 0 + 阳性对照 90 → 审计器 tracked/history/messages 三模式 OK
+      → 全量测试五批全绿（153 收集）→ 临时 clone 用完即删
+- [x] CI 轮数 = push 数对账：4 次 push（含 1 次 force push、1 次 tag push）= 4 次 run；
+      **tag push 触发新一轮**（ci.yml `on: push` 未过滤 ref，如实记录）；最新两轮四矩阵全绿
+- 中间一轮 CI 红（run 37412065943）原因：**留档复述路径字面值触发自家审计硬门**——
+  守门测试在推送后立刻拦下（本地漏跑审计的一次失误），改描述式表述 + amend + force-with-lease
+  修复，四矩阵复绿（小错修复通道，新仓库零协作者零消费者，安全）。
