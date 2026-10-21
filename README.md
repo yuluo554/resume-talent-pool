@@ -40,14 +40,14 @@ flowchart LR
 ```bash
 py -m venv .venv
 .venv\Scripts\activate                 # Git Bash: source .venv/Scripts/activate
-python -m pip install -U pip           # 3.8 venv 自带老 pip 装不了 pyproject-only editable 项目，必须先升
+python -m pip install -U pip
 pip install -e ".[dev,parse,gen]"
 pytest
 resume-talent-pool --version
 ```
 
-- Python ≥ 3.8（开发机 3.8.8）；桌面应用需 GUI extras：`pip install -e ".[dev,parse,gui]"`，运行 `py -m resume_talent_pool.cli gui`（未装 PySide6 时 GUI 真实窗口测试自动 skip，收集数不变）。
-- 依赖分组见 `pyproject.toml`：`parse`/`gen`/`gui`/`report`/`llm`/`dev`/`pkg`（PyInstaller）。
+- Python ≥ 3.12；桌面应用需 GUI extras：`pip install -e ".[dev,parse,gui]"`，运行 `py -m resume_talent_pool.cli gui`（未装 PySide6 时 GUI 真实窗口测试自动 skip，收集数不变）。
+- 依赖分组见 `pyproject.toml`：`parse`/`gen`/`gui`/`report`/`llm`/`dev`/`pkg`（PyInstaller）。`gen` 组需要 `reportlab`（其**主版本决定生成的 PDF 字节**，见下节）。
 
 ## 内置评测基准
 
@@ -60,6 +60,14 @@ py -m resume_talent_pool.cli bench gen --seed 20261005   # 生成 output/（不�
 py -m resume_talent_pool.cli bench parse --data output   # 字段解析基准（门槛 0.95）
 py -m resume_talent_pool.cli bench match --data output   # 归一基准（门槛 P/R≥0.95 + 误合并率 0）
 ```
+
+- 生成产物默认落 `output/`（不入仓）；仓内 `data/samples/resumes/` 是 **18 份手写样例**，
+  不是生成器产物。位级可复现指**两次 `bench gen` 同 seed、同 reportlab 主版本之间
+  逐字节一致**，不是与仓库内容对账。
+- 生成的 PDF 字节依赖 `reportlab` 主版本（本仓曾用 3.6.13；抬 floor 后为 5.x）。
+  **`truth.json` 与 docx/txt 不受影响**（实测跨主版本 sha256 相同）；基准指标也不受影响
+  （实测 6 个数字全同）。若需与旧批次逐字节对齐，请固定 `reportlab==3.6.13`
+  并用 Python ≤3.11。
 
 **字段解析基准（全量 178 份，宏平均 F1 = 1.0000）**
 
@@ -147,6 +155,16 @@ docs/                     演示素材（demo.gif）与技术报告（技术报�
 scripts/                  可复现工具（演示 GIF 生成、脱敏审计、技术报告 docx 生成）
 packaging/ + *.spec       PyInstaller 打包入口与配置
 ```
+
+本地工作区目录（**均不入仓**，`.gitignore` 覆盖，可随时重建）：
+
+| 目录 | 内容 | 重建方式 |
+|---|---|---|
+| `dist/` | PyInstaller onedir 产物树与发布用 zip | `py -m PyInstaller --noconfirm --clean resume-talent-pool.spec` |
+| `build/` | PyInstaller 中间产物 | 同上（构建时自动生成） |
+| `output/` | `bench gen` 的默认输出（合成简历 + `truth.json`） | `py -m resume_talent_pool.cli bench gen --seed 20261005` |
+
+三者合计约 290 MB，是发布现场与本地跑基准的副产物；删掉不影响仓库与测试，重建即可。
 
 ## 边界与限制
 

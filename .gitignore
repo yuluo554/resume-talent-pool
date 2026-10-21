@@ -21,6 +21,9 @@ reports/
 *.key
 *_private/
 
+# 迭代交接物（诊断/路线/提示词/执行记录；含本机绝对路径，不入仓）
+update/
+
 # 系统文件
 Thumbs.db
 Desktop.ini
