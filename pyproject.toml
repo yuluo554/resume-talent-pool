@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "resume-talent-pool"
-version = "0.1.0"
+version = "0.2.0"
 description = "简历解析与人才库管理桌面应用：批量导入解析、本地人才库、同一人归一、JD 硬条件初筛、PIPL 合规功能化（全本地运行）"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -32,7 +32,7 @@ gui = ["PySide6>=6.6"]
 report = ["python-docx>=0.8.11"]
 llm = ["openai>=1.10"]
 dev = ["pytest>=7.4"]
-pkg = ["pyinstaller>=5.13,<6"]
+pkg = ["pyinstaller>=6"]  # 5.x 要求 Python <3.13，与 requires-python 声明的 3.13 冲突
 
 [project.scripts]
 resume-talent-pool = "resume_talent_pool.cli:main"
